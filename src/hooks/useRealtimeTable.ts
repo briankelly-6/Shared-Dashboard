@@ -58,6 +58,9 @@ export interface RealtimeTable<T extends BaseRow> {
   update: (id: string, patch: Partial<T>) => Promise<void>;
   /** Optimistically remove a row by id. */
   remove: (id: string) => Promise<void>;
+  /** Move a row one position up or down by swapping sort_order with its
+   *  neighbor in the current (sorted) order. */
+  move: (id: string, direction: 'up' | 'down') => Promise<void>;
 }
 
 /**
@@ -207,5 +210,54 @@ export function useRealtimeTable<T extends BaseRow>(
     [table],
   );
 
-  return { rows, loading, error, insert, update, remove };
+  const move = useCallback(
+    async (id: string, direction: 'up' | 'down'): Promise<void> => {
+      const list = rowsRef.current;
+      const i = list.findIndex((r) => r.id === id);
+      if (i === -1) return;
+      const j = direction === 'up' ? i - 1 : i + 1;
+      if (j < 0 || j >= list.length) return;
+
+      const a = list[i];
+      const b = list[j];
+      const before = list;
+
+      // Swap their sort_order values (re-sort happens in setRows).
+      let aOrder = b.sort_order;
+      let bOrder = a.sort_order;
+      // Guard against equal sort_order values: force a strict gap so the swap
+      // is visible.
+      if (aOrder === bOrder) {
+        aOrder = direction === 'up' ? bOrder - 1 : bOrder + 1;
+      }
+
+      setRows((prev) =>
+        sortRows(
+          prev.map((r) => {
+            if (r.id === a.id) return { ...r, sort_order: aOrder };
+            if (r.id === b.id) return { ...r, sort_order: bOrder };
+            return r;
+          }),
+        ),
+      );
+
+      const [r1, r2] = await Promise.all([
+        supabase
+          .from(table)
+          .update({ sort_order: aOrder } as Record<string, unknown>)
+          .eq('id', a.id),
+        supabase
+          .from(table)
+          .update({ sort_order: bOrder } as Record<string, unknown>)
+          .eq('id', b.id),
+      ]);
+      if (r1.error || r2.error) {
+        setRows(before);
+        setError((r1.error ?? r2.error)?.message ?? 'Reorder failed');
+      }
+    },
+    [table],
+  );
+
+  return { rows, loading, error, insert, update, remove, move };
 }

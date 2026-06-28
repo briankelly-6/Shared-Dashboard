@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { InlineText } from './InlineText';
+import { ReorderButtons } from './ReorderButtons';
 
 export interface ChecklistItemData {
   id: string;
@@ -14,6 +15,7 @@ interface ChecklistProps {
   onToggle: (id: string, done: boolean) => void;
   onEdit: (id: string, text: string) => void;
   onDelete: (id: string) => void;
+  onMove?: (id: string, direction: 'up' | 'down') => void;
   addPlaceholder?: string;
   emptyLabel?: string;
 }
@@ -30,6 +32,7 @@ export function Checklist({
   onToggle,
   onEdit,
   onDelete,
+  onMove,
   addPlaceholder = 'Add item…',
   emptyLabel = 'No items yet.',
 }: ChecklistProps) {
@@ -50,8 +53,16 @@ export function Checklist({
             {emptyLabel}
           </li>
         )}
-        {items.map((item) => (
+        {items.map((item, i) => (
           <li key={item.id} className="group flex items-center gap-2 px-2 py-1">
+            {onMove && (
+              <ReorderButtons
+                canUp={i > 0}
+                canDown={i < items.length - 1}
+                onUp={() => onMove(item.id, 'up')}
+                onDown={() => onMove(item.id, 'down')}
+              />
+            )}
             <input
               type="checkbox"
               checked={item.done}

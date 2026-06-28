@@ -19,6 +19,7 @@ export function FridayTopicsWidget() {
       onToggle={(id, done) => void topics.update(id, { done })}
       onEdit={(id, text) => void topics.update(id, { text })}
       onDelete={(id) => void topics.remove(id)}
+      onMove={(id, direction) => void topics.move(id, direction)}
     />
   );
 }

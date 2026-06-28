@@ -3,6 +3,7 @@ import { useRealtimeTable } from '../hooks/useRealtimeTable';
 import type { Pipeline, PipelineCompany, WorkPlanItem } from '../lib/types';
 import { InlineText } from '../components/InlineText';
 import { Checklist } from '../components/Checklist';
+import { ReorderButtons } from '../components/ReorderButtons';
 
 interface PipelineWidgetProps {
   pipeline: Pipeline;
@@ -50,7 +51,7 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
               No companies yet.
             </li>
           )}
-          {companies.rows.map((company) => {
+          {companies.rows.map((company, i) => {
             const active = company.id === selectedId;
             return (
               <li
@@ -59,10 +60,17 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
                   active ? 'bg-neutral-900 text-white' : 'hover:bg-neutral-50'
                 }`}
               >
+                <ReorderButtons
+                  canUp={i > 0}
+                  canDown={i < companies.rows.length - 1}
+                  onUp={() => companies.move(company.id, 'up')}
+                  onDown={() => companies.move(company.id, 'down')}
+                  dark={active}
+                />
                 <button
                   type="button"
                   onClick={() => setSelectedId(company.id)}
-                  className="shrink-0 px-1 py-1 text-left text-[11px] text-neutral-400"
+                  className="shrink-0 px-0.5 py-1 text-left text-[11px] text-neutral-400"
                   aria-label={`Select ${company.name || 'company'}`}
                   title="Select"
                 >
@@ -156,6 +164,7 @@ function WorkPlan({ companyId }: WorkPlanProps) {
           onToggle={(id, done) => void items.update(id, { done })}
           onEdit={(id, text) => void items.update(id, { text })}
           onDelete={(id) => void items.remove(id)}
+          onMove={(id, direction) => void items.move(id, direction)}
         />
       </div>
     </div>

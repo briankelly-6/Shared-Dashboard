@@ -1,6 +1,7 @@
 import { useRealtimeTable } from '../hooks/useRealtimeTable';
 import type { IdeaList, IdeaRow, Side } from '../lib/types';
 import { InlineText } from '../components/InlineText';
+import { ReorderButtons } from '../components/ReorderButtons';
 
 interface IdeaTableWidgetProps {
   list: IdeaList;
@@ -29,7 +30,7 @@ export function IdeaTableWidget({ list }: IdeaTableWidgetProps) {
               <th className="w-[38%] px-2 py-1 font-semibold">Company</th>
               <th className="w-[64px] px-2 py-1 font-semibold">L/S</th>
               <th className="px-2 py-1 font-semibold">Thesis</th>
-              <th className="w-[28px] px-1 py-1" aria-label="Actions" />
+              <th className="w-[52px] px-1 py-1" aria-label="Actions" />
             </tr>
           </thead>
           <tbody className="divide-y divide-neutral-100">
@@ -43,7 +44,7 @@ export function IdeaTableWidget({ list }: IdeaTableWidgetProps) {
                 </td>
               </tr>
             )}
-            {rows.rows.map((row) => (
+            {rows.rows.map((row, i) => (
               <tr key={row.id} className="group align-top hover:bg-neutral-50">
                 <td className="px-1 py-0.5">
                   <InlineText
@@ -75,16 +76,24 @@ export function IdeaTableWidget({ list }: IdeaTableWidgetProps) {
                     onCommit={(thesis) => rows.update(row.id, { thesis })}
                   />
                 </td>
-                <td className="px-1 py-0.5 text-right">
-                  <button
-                    type="button"
-                    aria-label="Delete row"
-                    title="Delete row"
-                    onClick={() => rows.remove(row.id)}
-                    className="px-1 text-neutral-300 opacity-0 transition group-hover:opacity-100 hover:text-red-600"
-                  >
-                    ✕
-                  </button>
+                <td className="px-1 py-1">
+                  <div className="flex items-center justify-end gap-0.5">
+                    <ReorderButtons
+                      canUp={i > 0}
+                      canDown={i < rows.rows.length - 1}
+                      onUp={() => rows.move(row.id, 'up')}
+                      onDown={() => rows.move(row.id, 'down')}
+                    />
+                    <button
+                      type="button"
+                      aria-label="Delete row"
+                      title="Delete row"
+                      onClick={() => rows.remove(row.id)}
+                      className="px-1 text-neutral-300 hover:text-red-600"
+                    >
+                      ✕
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
