@@ -64,13 +64,15 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
 
   return (
     <div className="flex h-full min-h-0">
-      {/* Master: company list with a per-company Status column. Wider than the
-          work plan so the two columns have room. */}
-      <div className="flex w-3/5 min-w-[160px] flex-col border-r border-neutral-200">
+      {/* Master: company list with a per-company Status column. Column widths
+          across the whole widget are Company 18% / Status 33% / Work Plan 49%.
+          The master pane holds Company + Status, so it is 51% wide; Status is
+          64.7% of that pane (≈33% of the widget) and Company fills the rest. */}
+      <div className="flex w-[51%] min-w-[160px] flex-col border-r border-neutral-200">
         {/* Column headers — kept even (same height) with the Work Plan header. */}
         <div className="flex shrink-0 items-center border-b border-neutral-200 text-[10px] font-semibold uppercase tracking-wider text-neutral-400">
           <span className="min-w-0 flex-1 px-3 py-1.5">Company</span>
-          <span className="w-2/5 shrink-0 px-2 py-1.5">Status</span>
+          <span className="w-[64.7%] shrink-0 px-2 py-1.5">Status</span>
         </div>
         <ul className="min-h-0 flex-1 overflow-auto">
           {!companies.loading && companies.rows.length === 0 && (
@@ -135,7 +137,7 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
                     </button>
                   )}
                 </div>
-                <div className="w-2/5 shrink-0">
+                <div className="w-[64.7%] shrink-0">
                   <InlineText
                     value={company.status ?? ''}
                     placeholder="Status…"
@@ -165,7 +167,7 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
             type="button"
             onClick={() => void addCompany()}
             disabled={!draftName.trim()}
-            className="shrink-0 border border-emerald-600 bg-emerald-600 px-1.5 py-0.5 text-xs font-medium text-white hover:bg-emerald-700 disabled:opacity-40"
+            className="shrink-0 border border-emerald-600 bg-emerald-600 px-1.5 py-0.5 text-xs font-medium text-white hover:bg-emerald-700"
           >
             +
           </button>

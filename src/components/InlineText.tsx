@@ -59,7 +59,10 @@ export function InlineText({
             (e.target as HTMLTextAreaElement).blur();
           }
         }}
-        className={`${cls} resize-none`}
+        // content-center vertically centers the text within the fixed two-row
+        // box (so a short value sits centered like the single-line fields); a
+        // value long enough to overflow still anchors its first line at the top.
+        className={`${cls} resize-none content-center`}
       />
     );
   }

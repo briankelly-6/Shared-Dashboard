@@ -110,7 +110,7 @@ export function Checklist({
           type="button"
           onClick={add}
           disabled={!draft.trim()}
-          className="shrink-0 border border-emerald-600 bg-emerald-600 px-2 py-0.5 text-xs font-medium text-white hover:bg-emerald-700 disabled:opacity-40"
+          className="shrink-0 border border-emerald-600 bg-emerald-600 px-2 py-0.5 text-xs font-medium text-white hover:bg-emerald-700"
         >
           Add
         </button>
