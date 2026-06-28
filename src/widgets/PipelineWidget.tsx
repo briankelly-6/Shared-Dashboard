@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRealtimeTable } from '../hooks/useRealtimeTable';
 import type { Pipeline, PipelineCompany, WorkPlanItem } from '../lib/types';
-import { InlineText } from '../components/InlineText';
 import { Checklist } from '../components/Checklist';
 import { ReorderButtons } from '../components/ReorderButtons';
 
@@ -9,10 +8,19 @@ interface PipelineWidgetProps {
   pipeline: Pipeline;
 }
 
+interface MenuState {
+  id: string;
+  x: number;
+  y: number;
+}
+
 /**
  * Long / Short Pipeline — Active Work. Master-detail: a company list on the
  * left, the selected company's Work Plan checklist on the right. The two
  * pipelines share this component but read/write fully separate data.
+ *
+ * Company rows: left-click selects (opens the work plan); right-click opens a
+ * small menu to Edit (rename inline) or Delete.
  */
 export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
   const companies = useRealtimeTable<PipelineCompany>('pipeline_companies', {
@@ -20,6 +28,8 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
     value: pipeline,
   });
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [menu, setMenu] = useState<MenuState | null>(null);
   const [draftName, setDraftName] = useState('');
 
   // Keep a valid selection: default to the first company; clear if emptied.
@@ -33,6 +43,16 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
     }
   }, [companies.rows, selectedId]);
 
+  // Close the context menu on Escape.
+  useEffect(() => {
+    if (!menu) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenu(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menu]);
+
   const addCompany = async () => {
     const name = draftName.trim();
     if (!name) return;
@@ -45,7 +65,7 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
     <div className="flex h-full min-h-0">
       {/* Master: company list */}
       <div className="flex w-2/5 min-w-[120px] flex-col border-r border-neutral-200">
-        <ul className="min-h-0 flex-1 divide-y divide-neutral-100 overflow-auto">
+        <ul className="min-h-0 flex-1 overflow-auto">
           {!companies.loading && companies.rows.length === 0 && (
             <li className="px-2 py-2 text-xs italic text-neutral-400">
               No companies yet.
@@ -53,11 +73,18 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
           )}
           {companies.rows.map((company, i) => {
             const active = company.id === selectedId;
+            const editing = company.id === editingId;
             return (
               <li
                 key={company.id}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  setMenu({ id: company.id, x: e.clientX, y: e.clientY });
+                }}
                 className={`group flex items-center gap-1 px-1 ${
-                  active ? 'bg-neutral-900 text-white' : 'hover:bg-neutral-50'
+                  active
+                    ? 'bg-navy-100 text-navy-900'
+                    : `${i % 2 ? 'bg-neutral-100' : 'bg-white'} hover:bg-neutral-200`
                 }`}
               >
                 <ReorderButtons
@@ -65,39 +92,40 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
                   canDown={i < companies.rows.length - 1}
                   onUp={() => companies.move(company.id, 'up')}
                   onDown={() => companies.move(company.id, 'down')}
-                  dark={active}
                 />
-                <button
-                  type="button"
-                  onClick={() => setSelectedId(company.id)}
-                  className="shrink-0 px-0.5 py-1 text-left text-[11px] text-neutral-400"
-                  aria-label={`Select ${company.name || 'company'}`}
-                  title="Select"
-                >
-                  {active ? '▸' : '·'}
-                </button>
-                <InlineText
-                  value={company.name}
-                  placeholder="Company"
-                  ariaLabel="Company name"
-                  onCommit={(name) => companies.update(company.id, { name })}
-                  className={`text-[13px] ${
-                    active
-                      ? 'text-white placeholder:text-neutral-400 focus:bg-neutral-700'
-                      : ''
-                  }`}
-                />
-                <button
-                  type="button"
-                  aria-label="Delete company"
-                  title="Delete company"
-                  onClick={() => companies.remove(company.id)}
-                  className={`shrink-0 px-1 opacity-0 transition group-hover:opacity-100 hover:text-red-500 ${
-                    active ? 'text-neutral-300' : 'text-neutral-300'
-                  }`}
-                >
-                  ✕
-                </button>
+                {editing ? (
+                  <input
+                    autoFocus
+                    aria-label="Company name"
+                    defaultValue={company.name}
+                    onBlur={(e) => {
+                      if (e.target.value !== company.name) {
+                        companies.update(company.id, { name: e.target.value });
+                      }
+                      setEditingId(null);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.currentTarget.blur();
+                      } else if (e.key === 'Escape') {
+                        e.currentTarget.value = company.name;
+                        e.currentTarget.blur();
+                      }
+                    }}
+                    className="min-w-0 flex-1 bg-white px-1 py-1 text-[13px] text-neutral-900"
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedId(company.id)}
+                    title="Click to open work plan · right-click to edit or delete"
+                    className="min-w-0 flex-1 cursor-pointer truncate px-1 py-1 text-left text-[13px]"
+                  >
+                    {company.name || (
+                      <span className="italic text-neutral-400">Unnamed</span>
+                    )}
+                  </button>
+                )}
               </li>
             );
           })}
@@ -134,6 +162,46 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
           </div>
         )}
       </div>
+
+      {/* Right-click menu: Edit / Delete */}
+      {menu && (
+        <>
+          <div
+            className="fixed inset-0 z-40"
+            onClick={() => setMenu(null)}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              setMenu(null);
+            }}
+          />
+          <div
+            className="fixed z-50 min-w-[130px] border border-neutral-300 bg-white py-1 text-[13px] shadow-md"
+            style={{ top: menu.y, left: menu.x }}
+          >
+            <button
+              type="button"
+              className="block w-full px-3 py-1 text-left text-neutral-800 hover:bg-neutral-100"
+              onClick={() => {
+                setSelectedId(menu.id);
+                setEditingId(menu.id);
+                setMenu(null);
+              }}
+            >
+              Edit name
+            </button>
+            <button
+              type="button"
+              className="block w-full px-3 py-1 text-left text-red-600 hover:bg-neutral-100"
+              onClick={() => {
+                companies.remove(menu.id);
+                setMenu(null);
+              }}
+            >
+              Delete company
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -47,14 +47,19 @@ export function Checklist({
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <ul className="min-h-0 flex-1 divide-y divide-neutral-100 overflow-auto">
+      <ul className="min-h-0 flex-1 overflow-auto">
         {!loading && items.length === 0 && (
           <li className="px-3 py-2 text-xs italic text-neutral-400">
             {emptyLabel}
           </li>
         )}
         {items.map((item, i) => (
-          <li key={item.id} className="group flex items-center gap-2 px-2 py-1">
+          <li
+            key={item.id}
+            className={`group flex items-center gap-2 px-2 py-1 ${
+              i % 2 ? 'bg-neutral-100' : 'bg-white'
+            } hover:bg-neutral-200`}
+          >
             {onMove && (
               <ReorderButtons
                 canUp={i > 0}

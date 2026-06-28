@@ -39,7 +39,7 @@ export function InlineText({
   };
 
   const base =
-    'w-full bg-transparent px-1 py-0.5 text-neutral-900 placeholder:text-neutral-400 focus:bg-neutral-50';
+    'w-full bg-transparent px-1 py-0.5 text-neutral-900 placeholder:text-neutral-400 focus:bg-navy-100';
   const strikeCls = strike ? 'line-through text-red-600' : '';
   const cls = `${base} ${strikeCls} ${className}`;
 

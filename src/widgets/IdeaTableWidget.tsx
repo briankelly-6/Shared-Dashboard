@@ -33,7 +33,7 @@ export function IdeaTableWidget({ list }: IdeaTableWidgetProps) {
               <th className="w-[52px] px-1 py-1" aria-label="Actions" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-neutral-100">
+          <tbody>
             {!rows.loading && rows.rows.length === 0 && (
               <tr>
                 <td
@@ -45,7 +45,12 @@ export function IdeaTableWidget({ list }: IdeaTableWidgetProps) {
               </tr>
             )}
             {rows.rows.map((row, i) => (
-              <tr key={row.id} className="group align-top hover:bg-neutral-50">
+              <tr
+                key={row.id}
+                className={`group align-top ${
+                  i % 2 ? 'bg-neutral-100' : 'bg-white'
+                } hover:bg-neutral-200`}
+              >
                 <td className="px-1 py-0.5">
                   <InlineText
                     value={row.company}
