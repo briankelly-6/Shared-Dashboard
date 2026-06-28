@@ -93,9 +93,39 @@ supabase/
 
 ---
 
-## Setup — run locally first
+## Setup
 
-### Prerequisites
+You need a machine with **outbound access to Supabase** (some sandboxed/CI
+environments block it). Then pick one path:
+
+### Option A — one command (recommended)
+
+Provisions everything: links the project, pushes the migration, creates the
+shared account, sets the code + secrets, deploys the Edge Function, and writes
+your `.env`.
+
+```bash
+# 1. Create a project at https://supabase.com/dashboard and note its "ref"
+#    (the sub-domain of the project URL).
+# 2. Install the Supabase CLI:  npm i -g supabase   (or brew)
+# 3. From the repo root:
+bash scripts/setup.sh
+# 4. Then:
+npm install && npm run dev
+```
+
+The script is idempotent — safe to re-run. It prompts for the project ref, a
+6-digit code (or generates one), and the shared account email/password (or
+generates a password). It will ask you to `supabase login` if needed.
+
+> Note: this script was written in an environment that could not reach Supabase,
+> so it hasn't been executed end-to-end against a live project — run it on your
+> own machine. Each step uses standard `supabase` CLI commands and is easy to
+> follow if anything needs tweaking for your CLI version.
+
+### Option B — manual, step by step
+
+#### Prerequisites
 - Node 18+ and npm
 - A free [Supabase](https://supabase.com) project
 - (Optional) the [Supabase CLI](https://supabase.com/docs/guides/cli) for
@@ -150,6 +180,11 @@ Deploy the function:
 ```bash
 supabase functions deploy verify-code
 ```
+
+> The gate is called **before** anyone is authenticated, so the function must
+> not require a JWT. `supabase/config.toml` already sets
+> `[functions.verify-code] verify_jwt = false`, so the command above is enough.
+> (If you deploy without that config, add `--no-verify-jwt`.)
 
 ### 6. Configure the frontend env
 ```bash
