@@ -1,7 +1,8 @@
 -- ===========================================================================
 -- BK/AO Dashboard — initial schema
--- Four tables, Realtime enabled on all of them, RLS restricted to the
--- authenticated role (the single shared account the code gate signs into).
+-- Four tables, Realtime enabled on all of them, RLS granting full read/write
+-- to the anon role (the app gates the UI with a client-side 6-digit code and
+-- talks to the database with the public anon key). Low-confidentiality.
 -- ===========================================================================
 
 -- gen_random_uuid()
