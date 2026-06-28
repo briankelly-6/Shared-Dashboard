@@ -196,9 +196,13 @@ You'll paste these into Vercel in Part 2.
 
 **b) The Project URL → your `VITE_SUPABASE_URL`:**
 1. Click the green **Connect** button at the top of the page.
-2. In the panel, copy the **Project URL** — looks like
-   `https://abcdefghi….supabase.co`.
-   - *(It's also under Project Settings → **Data API**.)*
+2. The panel shows a `.env.local` example (it may default to a Next.js
+   template — ignore that). Copy only the **URL value** after
+   `…SUPABASE_URL=`, e.g. `https://abcdefghi….supabase.co`.
+   - Ignore everything else in this panel (package install, "Add files",
+     framework dropdown, Agent Skills) — our app already exists and uses the
+     `VITE_…` names, not the `NEXT_PUBLIC_…` ones shown here.
+   - *(The URL is also under Project Settings → **Data API**.)*
 
 > ✅ You now have **three** things written down:
 > 1. Project URL  2. the publishable key  3. your 6-digit code.
