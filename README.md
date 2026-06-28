@@ -86,8 +86,9 @@ For the full point-and-click version, see **[GET-LIVE.md](./GET-LIVE.md)**.
    of `supabase/migrations/0001_init.sql`, and run it. This creates the four
    tables, indexes, RLS policies (anon full access), and adds every table to the
    `supabase_realtime` publication.
-3. **Confirm Realtime:** **Database → Replication → `supabase_realtime`** should
-   list all four tables.
+3. **Confirm Realtime:** **Database → Publications → `supabase_realtime`** should
+   list all four tables (the migration adds them). Note: this is **Publications**,
+   not the separate "Replication" (read-replicas) page.
 4. **Get your keys:** **Project Settings → API** → copy the **Project URL** and
    the **anon public key**.
 5. **Configure env vars** (locally in `.env`, and in your host for production):

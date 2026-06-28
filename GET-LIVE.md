@@ -169,11 +169,16 @@ end $$;
    **idea_rows**, **friday_topics**. (They'll be empty — that's expected.)
 
 ### Step 1.5 — Confirm live sync is on
-1. In the left sidebar, click **Database**, then **Replication** (or
-   **Publications**).
+1. In the left sidebar, under **Database Management** (near the top), click
+   **Publications**.
+   - ⚠️ **Not "Replication"** — that's a different, newer feature (read replicas
+     / analytics) that you don't need. Ignore it.
 2. Open the publication named **`supabase_realtime`**.
-3. Confirm all four tables are listed / toggled on. They should already be —
-   the script in Step 1.3 added them. If any are missing, toggle them on.
+3. Confirm all four tables (`pipeline_companies`, `work_plan_items`,
+   `idea_rows`, `friday_topics`) are included / toggled on.
+4. They should already be on — the script in Step 1.3 added them. If any are
+   missing, toggle them on. (This step is just a double-check; if you got
+   "Success" in Step 1.3, live sync is already enabled and you can continue.)
 
 ### Step 1.6 — Copy your two connection values
 You'll paste these into Vercel in Part 2. Keep this tab open.
