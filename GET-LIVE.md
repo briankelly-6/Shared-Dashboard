@@ -13,7 +13,7 @@ You'll set up two free services and connect them:
 2. **Vercel** — hosts the actual website your team opens.
 
 Your app's code already lives in your **GitHub** repository
-(`briankelly-6/shared-dashboard`), so there's nothing to upload.
+(`briankelly-6/Shared-Dashboard`), so there's nothing to upload.
 
 > 💡 **Tip:** open this guide in one browser tab and do the work in another, so
 > you can flip back and forth.
@@ -25,6 +25,27 @@ Your app's code already lives in your **GitHub** repository
 Pick the **6-digit number** your team will type to open the board
 (e.g. `482915`). Write it down. You'll enter it once during setup and share it
 with your two teammates. You can change it later (see the end of this guide).
+
+---
+
+# PART 0 — One-time GitHub tidy-up (~1 minute)
+
+The finished code is on your repository's **`main`** branch, but the repository
+is currently set to treat a different working branch as its "default." Pointing
+it at `main` makes the next steps (Vercel) automatic. Do this once:
+
+1. Go to **https://github.com/briankelly-6/Shared-Dashboard**
+2. Click the **Settings** tab (top-right of the repo page).
+3. In the left menu, under **General**, find **Default branch** (near the top).
+4. Click the **switch/swap** icon (two arrows) next to the current branch name.
+5. Choose **`main`** from the dropdown, click **Update**, and confirm.
+
+That's it — you can ignore the other branch from here on. (Optional: later you
+can delete the old branch named `claude/vigilant-newton-vfy3xc` from the repo's
+**Branches** page; it's a duplicate of `main`.)
+
+> If you skip this, everything still works — you'll just need to tell Vercel to
+> use the `main` branch in **Part 2** (a note is included there).
 
 ---
 
@@ -179,10 +200,16 @@ You'll paste these into Vercel in Part 2. Keep this tab open.
 ### Step 2.2 — Import your repository
 1. On the Vercel dashboard, click **Add New… → Project**.
 2. You'll see a list of your GitHub repositories. Find
-   **`shared-dashboard`** and click **Import**.
+   **`Shared-Dashboard`** and click **Import**.
    - If you don't see it, click **Adjust GitHub App Permissions** (or
      **Configure GitHub App**) and grant Vercel access to the
-     `briankelly-6/shared-dashboard` repository, then come back.
+     `briankelly-6/Shared-Dashboard` repository, then come back.
+
+> **If you skipped Part 0:** after importing, the live site tracks whatever
+> branch GitHub calls "default." To point it at `main`, go to your Vercel
+> project → **Settings → Git → Production Branch**, set it to **`main`**, save,
+> then **Redeploy** (see "Changing the access code later" for how to redeploy).
+> If you did Part 0, you can ignore this.
 
 ### Step 2.3 — Confirm the build settings
 Vercel auto-detects this is a **Vite** app. You normally don't need to change
