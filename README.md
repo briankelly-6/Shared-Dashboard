@@ -89,8 +89,11 @@ For the full point-and-click version, see **[GET-LIVE.md](./GET-LIVE.md)**.
 3. **Confirm Realtime:** **Database → Publications → `supabase_realtime`** should
    list all four tables (the migration adds them). Note: this is **Publications**,
    not the separate "Replication" (read-replicas) page.
-4. **Get your keys:** **Project Settings → API** → copy the **Project URL** and
-   the **anon public key**.
+4. **Get your keys:** the **publishable key** (Project Settings → **API Keys** →
+   `sb_publishable_…`) is your `VITE_SUPABASE_ANON_KEY`; the **Project URL**
+   (green **Connect** button, or Settings → Data API) is your
+   `VITE_SUPABASE_URL`. Never use the secret key (`sb_secret_…`) in the
+   frontend. (On older projects, the legacy `anon` `public` key `eyJ…` works too.)
 5. **Configure env vars** (locally in `.env`, and in your host for production):
    ```
    VITE_SUPABASE_URL=https://<your-ref>.supabase.co

@@ -181,17 +181,27 @@ end $$;
    "Success" in Step 1.3, live sync is already enabled and you can continue.)
 
 ### Step 1.6 — Copy your two connection values
-You'll paste these into Vercel in Part 2. Keep this tab open.
-1. In the left sidebar, click **Project Settings** (the gear), then **API**.
-2. Find and copy these two values into your notes:
-   - **Project URL** — looks like `https://abcdefghi....supabase.co`
-     → this is your **VITE_SUPABASE_URL**.
-   - **Project API Keys → `anon` `public`** — a long string starting with
-     `eyJ...`
-     → this is your **VITE_SUPABASE_ANON_KEY**.
+You'll paste these into Vercel in Part 2.
+
+**a) The key → your `VITE_SUPABASE_ANON_KEY`:**
+1. In the left sidebar, click **Project Settings** (gear), then **API Keys**.
+2. Under **Publishable key**, copy the value starting with **`sb_publishable_…`**
+   (click the copy icon). It's labeled *"safe to use in a browser / safely
+   shared publicly"* — that's the one.
+   - ⚠️ **Do NOT** use the **Secret key** (`sb_secret_…`). That is private,
+     server-only — never put it in Vercel or share it.
+   - *(Older projects instead show an `anon` `public` key starting `eyJ…` under
+     the "Legacy anon, service_role API keys" tab. That also works if you see
+     it.)*
+
+**b) The Project URL → your `VITE_SUPABASE_URL`:**
+1. Click the green **Connect** button at the top of the page.
+2. In the panel, copy the **Project URL** — looks like
+   `https://abcdefghi….supabase.co`.
+   - *(It's also under Project Settings → **Data API**.)*
 
 > ✅ You now have **three** things written down:
-> 1. Project URL  2. anon public key  3. your 6-digit code.
+> 1. Project URL  2. the publishable key  3. your 6-digit code.
 
 ---
 
