@@ -86,6 +86,7 @@ create table if not exists public.pipeline_companies (
   id          uuid primary key default gen_random_uuid(),
   pipeline    text not null check (pipeline in ('long', 'short')),
   name        text not null default '',
+  status      text not null default '',
   sort_order  int  not null default 0,
   created_at  timestamptz not null default now()
 );
@@ -162,6 +163,16 @@ end $$;
 
 > This is the exact same script stored in the repo at
 > `supabase/migrations/0001_init.sql` — copying from either place is fine.
+
+> **Already live from before?** If you set the database up previously, it won't
+> have the new per-company **Status** field yet. Open the SQL Editor, paste the
+> one line below, and click **Run** (this is the script in
+> `supabase/migrations/0002_add_status_to_pipeline_companies.sql`):
+>
+> ```sql
+> alter table public.pipeline_companies
+>   add column if not exists status text not null default '';
+> ```
 
 ### Step 1.4 — Check the tables were created
 1. In the left sidebar, click **Table Editor**.

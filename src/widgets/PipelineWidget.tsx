@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRealtimeTable } from '../hooks/useRealtimeTable';
 import type { Pipeline, PipelineCompany, WorkPlanItem } from '../lib/types';
 import { Checklist } from '../components/Checklist';
+import { InlineText } from '../components/InlineText';
 import { ReorderButtons } from '../components/ReorderButtons';
 
 interface PipelineWidgetProps {
@@ -63,8 +64,14 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
 
   return (
     <div className="flex h-full min-h-0">
-      {/* Master: company list */}
-      <div className="flex w-2/5 min-w-[120px] flex-col border-r border-neutral-200">
+      {/* Master: company list with a per-company Status column. Wider than the
+          work plan so the two columns have room. */}
+      <div className="flex w-3/5 min-w-[160px] flex-col border-r border-neutral-200">
+        {/* Column headers — kept even (same height) with the Work Plan header. */}
+        <div className="flex shrink-0 items-center border-b border-neutral-200 text-[10px] font-semibold uppercase tracking-wider text-neutral-400">
+          <span className="min-w-0 flex-1 px-3 py-1.5">Company</span>
+          <span className="w-2/5 shrink-0 px-2 py-1.5">Status</span>
+        </div>
         <ul className="min-h-0 flex-1 overflow-auto">
           {!companies.loading && companies.rows.length === 0 && (
             <li className="px-2 py-2 text-xs italic text-neutral-400">
@@ -87,45 +94,58 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
                     : `${i % 2 ? 'bg-neutral-100' : 'bg-white'} hover:bg-neutral-200`
                 }`}
               >
-                <ReorderButtons
-                  canUp={i > 0}
-                  canDown={i < companies.rows.length - 1}
-                  onUp={() => companies.move(company.id, 'up')}
-                  onDown={() => companies.move(company.id, 'down')}
-                />
-                {editing ? (
-                  <input
-                    autoFocus
-                    aria-label="Company name"
-                    defaultValue={company.name}
-                    onBlur={(e) => {
-                      if (e.target.value !== company.name) {
-                        companies.update(company.id, { name: e.target.value });
-                      }
-                      setEditingId(null);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.currentTarget.blur();
-                      } else if (e.key === 'Escape') {
-                        e.currentTarget.value = company.name;
-                        e.currentTarget.blur();
-                      }
-                    }}
-                    className="min-w-0 flex-1 bg-white px-1 py-1 text-[13px] text-neutral-900"
+                <div className="flex min-w-0 flex-1 items-center gap-1">
+                  <ReorderButtons
+                    canUp={i > 0}
+                    canDown={i < companies.rows.length - 1}
+                    onUp={() => companies.move(company.id, 'up')}
+                    onDown={() => companies.move(company.id, 'down')}
                   />
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setSelectedId(company.id)}
-                    title="Click to open work plan · right-click to edit or delete"
-                    className="min-w-0 flex-1 cursor-pointer truncate px-1 py-1 text-left text-[13px]"
-                  >
-                    {company.name || (
-                      <span className="italic text-neutral-400">Unnamed</span>
-                    )}
-                  </button>
-                )}
+                  {editing ? (
+                    <input
+                      autoFocus
+                      aria-label="Company name"
+                      defaultValue={company.name}
+                      onBlur={(e) => {
+                        if (e.target.value !== company.name) {
+                          companies.update(company.id, { name: e.target.value });
+                        }
+                        setEditingId(null);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.currentTarget.blur();
+                        } else if (e.key === 'Escape') {
+                          e.currentTarget.value = company.name;
+                          e.currentTarget.blur();
+                        }
+                      }}
+                      className="min-w-0 flex-1 bg-white px-1 py-1 text-[13px] text-neutral-900"
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setSelectedId(company.id)}
+                      title="Click to open work plan · right-click to edit or delete"
+                      className="min-w-0 flex-1 cursor-pointer truncate px-1 py-1 text-left text-[13px]"
+                    >
+                      {company.name || (
+                        <span className="italic text-neutral-400">Unnamed</span>
+                      )}
+                    </button>
+                  )}
+                </div>
+                <div className="w-2/5 shrink-0">
+                  <InlineText
+                    value={company.status ?? ''}
+                    placeholder="Status…"
+                    ariaLabel="Status"
+                    onCommit={(status) =>
+                      companies.update(company.id, { status })
+                    }
+                    className="text-[13px]"
+                  />
+                </div>
               </li>
             );
           })}
@@ -145,7 +165,7 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
             type="button"
             onClick={() => void addCompany()}
             disabled={!draftName.trim()}
-            className="shrink-0 border border-neutral-300 px-1.5 py-0.5 text-xs text-neutral-700 hover:bg-neutral-100 disabled:opacity-40"
+            className="shrink-0 border border-emerald-600 bg-emerald-600 px-1.5 py-0.5 text-xs font-medium text-white hover:bg-emerald-700 disabled:opacity-40"
           >
             +
           </button>

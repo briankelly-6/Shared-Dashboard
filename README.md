@@ -18,7 +18,7 @@ Everyone shares one board and sees the same live state across their devices.
 
 | # | Widget | Type | Data |
 |---|--------|------|------|
-| 1 | **Long Pipeline — Active Work** | Master-detail: company list → per-company Work Plan checklist | `pipeline_companies` (long) + `work_plan_items` |
+| 1 | **Long Pipeline — Active Work** | Master-detail: company list (with a per-company Status note) → per-company Work Plan checklist | `pipeline_companies` (long) + `work_plan_items` |
 | 2 | **Short Pipeline — Active Work** | Same as #1, separate data | `pipeline_companies` (short) + `work_plan_items` |
 | 3 | **On Deck Circle** | Flat table: Company / L-S / Thesis | `idea_rows` (on_deck) |
 | 4 | **Quick Cut Pipeline** | Same as #3, separate data | `idea_rows` (quick_cut) |

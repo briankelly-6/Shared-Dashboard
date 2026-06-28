@@ -16,6 +16,7 @@ create table if not exists public.pipeline_companies (
   id          uuid primary key default gen_random_uuid(),
   pipeline    text not null check (pipeline in ('long', 'short')),
   name        text not null default '',
+  status      text not null default '',
   sort_order  int  not null default 0,
   created_at  timestamptz not null default now()
 );

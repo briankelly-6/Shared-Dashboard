@@ -17,14 +17,14 @@ const SPAN_CLASS: Record<WidgetDef['span'], string> = {
 export function Dashboard({ onLock }: DashboardProps) {
   return (
     <div className="flex h-screen min-h-0 flex-col bg-neutral-100">
-      <header className="flex shrink-0 items-center justify-between border-b border-neutral-300 bg-white px-4 py-2">
-        <h1 className="text-sm font-semibold tracking-tight text-neutral-900">
+      <header className="flex shrink-0 items-center justify-between border-b border-navy-900 bg-navy-900 px-4 py-2">
+        <h1 className="text-sm font-semibold tracking-tight text-white">
           BK/AO Dashboard
         </h1>
         <button
           type="button"
           onClick={onLock}
-          className="text-[11px] uppercase tracking-wider text-neutral-400 hover:text-neutral-700"
+          className="text-[11px] uppercase tracking-wider text-navy-200 hover:text-white"
           title="Lock this device"
         >
           Lock

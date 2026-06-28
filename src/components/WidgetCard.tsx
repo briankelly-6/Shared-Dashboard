@@ -13,8 +13,8 @@ interface WidgetCardProps {
 export function WidgetCard({ title, children }: WidgetCardProps) {
   return (
     <section className="flex h-full min-h-0 flex-col border border-neutral-300 bg-white">
-      <header className="flex shrink-0 items-center justify-between border-b border-neutral-200 px-3 py-2">
-        <h2 className="text-[11px] font-semibold uppercase tracking-wider text-neutral-700">
+      <header className="flex shrink-0 items-center justify-between border-b border-navy-900 bg-navy-900 px-3 py-2">
+        <h2 className="text-[11px] font-semibold uppercase tracking-wider text-white">
           {title}
         </h2>
         <button
@@ -22,7 +22,7 @@ export function WidgetCard({ title, children }: WidgetCardProps) {
           disabled
           aria-label="Widget menu (coming soon)"
           title="Coming soon"
-          className="-mr-1 cursor-not-allowed px-1 text-base leading-none text-neutral-300"
+          className="-mr-1 cursor-not-allowed px-1 text-base leading-none text-navy-200"
         >
           ⋯
         </button>

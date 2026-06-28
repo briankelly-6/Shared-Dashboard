@@ -8,6 +8,8 @@ export interface PipelineCompany {
   id: string;
   pipeline: Pipeline;
   name: string;
+  /** Free-text status note shown beside the company name. */
+  status: string;
   sort_order: number;
   created_at: string;
 }

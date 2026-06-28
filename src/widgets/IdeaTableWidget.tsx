@@ -47,7 +47,7 @@ export function IdeaTableWidget({ list }: IdeaTableWidgetProps) {
             {rows.rows.map((row, i) => (
               <tr
                 key={row.id}
-                className={`group align-top ${
+                className={`group align-middle ${
                   i % 2 ? 'bg-neutral-100' : 'bg-white'
                 } hover:bg-neutral-200`}
               >
@@ -110,7 +110,7 @@ export function IdeaTableWidget({ list }: IdeaTableWidgetProps) {
         <button
           type="button"
           onClick={addRow}
-          className="border border-neutral-300 px-2 py-0.5 text-xs text-neutral-700 hover:bg-neutral-100"
+          className="border border-emerald-600 bg-emerald-600 px-2 py-0.5 text-xs font-medium text-white hover:bg-emerald-700"
         >
           + Add row
         </button>
