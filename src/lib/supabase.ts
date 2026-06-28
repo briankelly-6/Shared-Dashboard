@@ -4,8 +4,9 @@ const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
 /**
- * True only when both env vars are present. The app shows a friendly setup
- * notice instead of crashing when they are missing (e.g. before `.env` is set).
+ * True only when both Supabase env vars are present. The app shows a friendly
+ * setup notice instead of crashing when they are missing (e.g. before `.env`
+ * is set).
  */
 export const isSupabaseConfigured = Boolean(url && anonKey);
 
@@ -17,17 +18,10 @@ if (!isSupabaseConfigured) {
   );
 }
 
-// Falls back to harmless placeholder values so createClient doesn't throw;
-// `isSupabaseConfigured` gates the UI before any request is made.
+// The app reads/writes as the anon role; the database RLS policies allow it.
+// Falls back to harmless placeholders so createClient never throws before
+// configuration — `isSupabaseConfigured` gates the UI first.
 export const supabase = createClient(
   url ?? 'http://localhost:54321',
   anonKey ?? 'public-anon-key',
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      // Remember the shared session per-device under a stable key.
-      storageKey: 'bk-ao-dashboard-auth',
-    },
-  },
 );

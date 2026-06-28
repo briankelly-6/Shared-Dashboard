@@ -1,47 +1,32 @@
 import { useRef, useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { ACCESS_CODE } from '../lib/config';
+
+interface CodeGateProps {
+  onUnlock: () => void;
+}
 
 /**
- * First-visit gate. Collects the shared 6-digit code, sends it to the
- * `verify-code` Edge Function, and — on success — installs the returned
- * shared session. `onAuthStateChange` (see useSession) then unlocks the app.
+ * First-visit gate. Collects the shared 6-digit code and compares it to the
+ * configured access code in the browser. On a match it calls onUnlock(), which
+ * remembers this device (localStorage) and reveals the dashboard.
+ *
+ * This is a low-confidentiality, client-side gate (see README). The code is
+ * present in the built site; it keeps the board out of casual view rather than
+ * providing strong security.
  */
-export function CodeGate() {
+export function CodeGate({ onUnlock }: CodeGateProps) {
   const [code, setCode] = useState('');
-  const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  async function submit(value: string) {
-    setBusy(true);
-    setError(null);
-    try {
-      const { data, error: fnError } = await supabase.functions.invoke(
-        'verify-code',
-        { body: { code: value } },
-      );
-
-      if (fnError || !data?.session) {
-        setError('Incorrect code. Try again.');
-        setCode('');
-        inputRef.current?.focus();
-        return;
-      }
-
-      const { access_token, refresh_token } = data.session;
-      const { error: setErr } = await supabase.auth.setSession({
-        access_token,
-        refresh_token,
-      });
-      if (setErr) {
-        setError('Could not start a session. Try again.');
-        setCode('');
-      }
-      // On success, onAuthStateChange flips the app to the dashboard.
-    } catch {
-      setError('Network error. Check your connection and try again.');
-    } finally {
-      setBusy(false);
+  function submit(value: string) {
+    if (value === ACCESS_CODE) {
+      setError(null);
+      onUnlock();
+    } else {
+      setError('Incorrect code. Try again.');
+      setCode('');
+      inputRef.current?.focus();
     }
   }
 
@@ -49,9 +34,7 @@ export function CodeGate() {
     const digits = raw.replace(/\D/g, '').slice(0, 6);
     setCode(digits);
     setError(null);
-    if (digits.length === 6 && !busy) {
-      void submit(digits);
-    }
+    if (digits.length === 6) submit(digits);
   }
 
   return (
@@ -70,7 +53,7 @@ export function CodeGate() {
           className="px-4 py-4"
           onSubmit={(e) => {
             e.preventDefault();
-            if (code.length === 6) void submit(code);
+            if (code.length === 6) submit(code);
           }}
         >
           <input
@@ -80,18 +63,17 @@ export function CodeGate() {
             pattern="[0-9]*"
             aria-label="Access code"
             value={code}
-            disabled={busy}
             onChange={(e) => handleChange(e.target.value)}
-            className="w-full border border-neutral-300 px-3 py-2 text-center font-mono text-2xl tracking-[0.5em] text-neutral-900 focus:border-neutral-500 disabled:opacity-50"
+            className="w-full border border-neutral-300 px-3 py-2 text-center font-mono text-2xl tracking-[0.5em] text-neutral-900 focus:border-neutral-500"
             placeholder="••••••"
           />
 
           <button
             type="submit"
-            disabled={busy || code.length !== 6}
+            disabled={code.length !== 6}
             className="mt-3 w-full border border-neutral-900 bg-neutral-900 py-2 text-xs font-medium uppercase tracking-wide text-white transition-colors hover:bg-neutral-700 disabled:cursor-not-allowed disabled:border-neutral-300 disabled:bg-neutral-300"
           >
-            {busy ? 'Checking…' : 'Unlock'}
+            Unlock
           </button>
 
           <div className="mt-2 h-4 text-center text-xs text-red-600">

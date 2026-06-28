@@ -9,6 +9,9 @@ Everyone shares one board and sees the same live state across their devices.
 - **Backend / data / realtime:** Supabase (hosted Postgres + Realtime)
 - **Deploy:** Vercel (frontend) + Supabase (hosted)
 
+> **New here / non-technical?** Follow **[GET-LIVE.md](./GET-LIVE.md)** — a
+> click-by-click guide to putting this online with no developer tools.
+
 ---
 
 ## The six widgets
@@ -43,18 +46,20 @@ optimistic UI updates.
   `remove`. Every widget is a thin view over this hook. Optimistic rows use a
   client-generated UUID so the row's own realtime echo merges by `id` instead
   of duplicating.
-- **Auth / gate.** A single shared 6-digit code gates the whole app. See below.
+- **Code gate.** A single shared 6-digit code gates the UI client-side
+  (`src/auth/CodeGate.tsx`): the entered code is compared to
+  `VITE_APP_ACCESS_CODE`, and a passing device is remembered in `localStorage`.
 
 ```
 src/
   App.tsx                  setup notice / gate / dashboard switch
   lib/
     supabase.ts            client + isSupabaseConfigured guard
+    config.ts              access code + unlock-key
     types.ts               domain types (mirror the tables)
   hooks/
     useRealtimeTable.ts    generic fetch + realtime + optimistic CRUD
   auth/
-    useSession.ts          tracks the shared Supabase session
     CodeGate.tsx           6-digit code entry screen
   components/
     Dashboard.tsx          header + responsive grid (3×2 desktop)
@@ -68,167 +73,58 @@ src/
     FridayTopicsWidget.tsx checklist (#6)
 supabase/
   migrations/0001_init.sql tables + indexes + RLS + realtime
-  functions/verify-code/   Edge Function that gates on the shared code
 ```
 
 ---
 
-## How the code gate works (preferred: Edge Function)
+## Setup (technical summary)
 
-1. First visit shows a code-entry screen.
-2. The 6 digits are POSTed to the `verify-code` Edge Function.
-3. The function compares them to the secret `APP_ACCESS_CODE`. The code is
-   **never shipped to the browser**.
-4. On a match, the function signs into **one shared Supabase Auth account**
-   (server-side, using secret credentials) and returns that session.
-5. The client installs the session; Supabase persists it in `localStorage`, so
-   the device stays unlocked across reloads until you click **Lock**.
-6. Row Level Security allows the `authenticated` role full read/write — so only
-   devices that passed the gate can touch the data.
+For the full point-and-click version, see **[GET-LIVE.md](./GET-LIVE.md)**.
 
-> **Acceptable fallback (not used here):** a purely client-side code check with
-> anon RLS (security by URL obscurity). Acceptable given low confidentiality,
-> but it ships the code in the bundle. This project uses the Edge Function
-> approach instead.
+1. **Create a Supabase project** at https://supabase.com/dashboard.
+2. **Run the migration:** open the project's **SQL Editor**, paste the contents
+   of `supabase/migrations/0001_init.sql`, and run it. This creates the four
+   tables, indexes, RLS policies (anon full access), and adds every table to the
+   `supabase_realtime` publication.
+3. **Confirm Realtime:** **Database → Replication → `supabase_realtime`** should
+   list all four tables.
+4. **Get your keys:** **Project Settings → API** → copy the **Project URL** and
+   the **anon public key**.
+5. **Configure env vars** (locally in `.env`, and in your host for production):
+   ```
+   VITE_SUPABASE_URL=https://<your-ref>.supabase.co
+   VITE_SUPABASE_ANON_KEY=<your anon key>
+   VITE_APP_ACCESS_CODE=<your 6-digit code>
+   ```
+6. **Run locally:**
+   ```bash
+   npm install
+   npm run dev
+   ```
+   Open the printed URL, enter the code, and confirm edits sync across a second
+   tab/device in ~1–2s.
 
----
+Scripts: `npm run dev` · `npm run build` · `npm run preview` · `npm run typecheck`.
 
-## Setup
-
-You need a machine with **outbound access to Supabase** (some sandboxed/CI
-environments block it). Then pick one path:
-
-### Option A — one command (recommended)
-
-Provisions everything: links the project, pushes the migration, creates the
-shared account, sets the code + secrets, deploys the Edge Function, and writes
-your `.env`.
-
-```bash
-# 1. Create a project at https://supabase.com/dashboard and note its "ref"
-#    (the sub-domain of the project URL).
-# 2. Install the Supabase CLI:  npm i -g supabase   (or brew)
-# 3. From the repo root:
-bash scripts/setup.sh
-# 4. Then:
-npm install && npm run dev
-```
-
-The script is idempotent — safe to re-run. It prompts for the project ref, a
-6-digit code (or generates one), and the shared account email/password (or
-generates a password). It will ask you to `supabase login` if needed.
-
-> Note: this script was written in an environment that could not reach Supabase,
-> so it hasn't been executed end-to-end against a live project — run it on your
-> own machine. Each step uses standard `supabase` CLI commands and is easy to
-> follow if anything needs tweaking for your CLI version.
-
-### Option B — manual, step by step
-
-#### Prerequisites
-- Node 18+ and npm
-- A free [Supabase](https://supabase.com) project
-- (Optional) the [Supabase CLI](https://supabase.com/docs/guides/cli) for
-  applying migrations / deploying the function from your terminal
-
-### 1. Create the Supabase project
-In the Supabase dashboard, create a project. Then from **Project Settings → API**
-note your:
-- **Project URL** → `VITE_SUPABASE_URL`
-- **anon public key** → `VITE_SUPABASE_ANON_KEY`
-
-### 2. Apply the database migration
-Run `supabase/migrations/0001_init.sql`. Either:
-
-- **Dashboard:** open **SQL Editor**, paste the file contents, and run it; **or**
-- **CLI:** `supabase link --project-ref <ref>` then `supabase db push`.
-
-This creates the four tables, indexes, RLS policies (authenticated full
-access), and adds every table to the `supabase_realtime` publication.
-
-### 3. Confirm Realtime is enabled
-The migration adds all four tables to the `supabase_realtime` publication. To
-double-check, open **Database → Replication → `supabase_realtime`** and confirm
-`pipeline_companies`, `work_plan_items`, `idea_rows`, and `friday_topics` are
-listed.
-
-### 4. Create the one shared auth account
-This is the account every device signs into after entering the code.
-
-- **Authentication → Users → Add user** (or "Create new user").
-- Use any email + a strong password, e.g. `shared@yourteam.example` /
-  `<long-random-password>`. **Confirm/auto-confirm the email** so password
-  sign-in works.
-- (Email/password sign-in must be enabled under **Authentication → Providers**.)
-
-### 5. Set the access code + deploy the Edge Function
-Set the function secrets (these stay server-side):
-
-```bash
-supabase secrets set \
-  APP_ACCESS_CODE=123456 \
-  SHARED_USER_EMAIL=shared@yourteam.example \
-  SHARED_USER_PASSWORD='<the shared account password>'
-```
-
-> Replace `123456` with your real 6-digit code. `SUPABASE_URL`,
-> `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` are injected
-> automatically — do not set them.
-
-Deploy the function:
-
-```bash
-supabase functions deploy verify-code
-```
-
-> The gate is called **before** anyone is authenticated, so the function must
-> not require a JWT. `supabase/config.toml` already sets
-> `[functions.verify-code] verify_jwt = false`, so the command above is enough.
-> (If you deploy without that config, add `--no-verify-jwt`.)
-
-### 6. Configure the frontend env
-```bash
-cp .env.example .env
-# then edit .env:
-#   VITE_SUPABASE_URL=https://<your-ref>.supabase.co
-#   VITE_SUPABASE_ANON_KEY=<your anon key>
-```
-
-### 7. Install and run
-```bash
-npm install
-npm run dev
-```
-
-Open the printed URL (default http://localhost:5173). Enter your 6-digit code.
-Open the app on a second device/tab and confirm edits propagate in ~1–2s
-without a refresh.
-
-Useful scripts:
-- `npm run dev` — dev server
-- `npm run build` — type-check + production build to `dist/`
-- `npm run preview` — preview the production build
-- `npm run typecheck` — `tsc --noEmit`
+### Deploy the frontend → Vercel
+Import the repo in Vercel (framework preset **Vite**; build `npm run build`,
+output `dist`), add the three `VITE_*` env vars in the Vercel project settings,
+and deploy. The backend (Supabase) is already hosted once steps 1–3 are done.
 
 ---
 
-## Deploy
+## Security note
 
-### Frontend → Vercel
-1. Import the repo in Vercel. Framework preset: **Vite** (build `npm run build`,
-   output `dist`).
-2. Add env vars **VITE_SUPABASE_URL** and **VITE_SUPABASE_ANON_KEY** in the
-   Vercel project settings.
-3. Deploy.
+This is **low-confidentiality** access control, by design. The 6-digit code is
+checked in the browser, and the database is reachable with the public anon key
+under permissive RLS. In practice that means: anyone who has the site URL and
+the code can use the board, and a technically-minded person could recover the
+code or the anon key from the site. That is an accepted trade-off for a small
+internal team board with no sensitive data.
 
-### Backend → Supabase (hosted)
-Already hosted once you've done setup steps 1–5. The migration and the
-`verify-code` function live under `supabase/` and can be re-applied with the
-Supabase CLI.
-
-> The 6-digit code is low-confidentiality access control, not strong security.
-> All three users share equal read/write with no per-user identity, roles, edit
-> history, or attribution — by design.
+If you later want stronger protection (keep the code secret on the server, lock
+the database to authenticated requests only), that can be added with a Supabase
+Edge Function + a shared auth account. Ask and it can be reintroduced.
 
 ---
 

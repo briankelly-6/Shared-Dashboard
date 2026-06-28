@@ -1,5 +1,6 @@
+import { useCallback, useState } from 'react';
 import { isSupabaseConfigured } from './lib/supabase';
-import { useSession } from './auth/useSession';
+import { isAccessCodeConfigured, UNLOCK_KEY } from './lib/config';
 import { CodeGate } from './auth/CodeGate';
 import { Dashboard } from './components/Dashboard';
 
@@ -11,13 +12,15 @@ function SetupNotice() {
           BK/AO Dashboard — setup needed
         </h1>
         <p className="mt-2 text-xs leading-relaxed text-neutral-600">
-          Supabase isn’t configured yet. Copy{' '}
-          <code className="bg-neutral-100 px-1">.env.example</code> to{' '}
-          <code className="bg-neutral-100 px-1">.env</code> and set{' '}
-          <code className="bg-neutral-100 px-1">VITE_SUPABASE_URL</code> and{' '}
+          The app isn’t configured yet. Set{' '}
+          <code className="bg-neutral-100 px-1">VITE_SUPABASE_URL</code>,{' '}
           <code className="bg-neutral-100 px-1">VITE_SUPABASE_ANON_KEY</code>,
-          then restart <code className="bg-neutral-100 px-1">npm run dev</code>.
-          See the README for full setup steps.
+          and a 6-digit{' '}
+          <code className="bg-neutral-100 px-1">VITE_APP_ACCESS_CODE</code> in
+          your environment (copy{' '}
+          <code className="bg-neutral-100 px-1">.env.example</code> to{' '}
+          <code className="bg-neutral-100 px-1">.env</code> locally, or add them
+          in your host’s settings), then reload. See the README.
         </p>
       </div>
     </div>
@@ -25,17 +28,27 @@ function SetupNotice() {
 }
 
 export default function App() {
-  const { session, loading } = useSession();
+  const configured = isSupabaseConfigured && isAccessCodeConfigured;
 
-  if (!isSupabaseConfigured) return <SetupNotice />;
+  const [unlocked, setUnlocked] = useState(
+    () => typeof localStorage !== 'undefined' && localStorage.getItem(UNLOCK_KEY) === '1',
+  );
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-neutral-100 text-xs text-neutral-400">
-        Loading…
-      </div>
-    );
-  }
+  const unlock = useCallback(() => {
+    localStorage.setItem(UNLOCK_KEY, '1');
+    setUnlocked(true);
+  }, []);
 
-  return session ? <Dashboard /> : <CodeGate />;
+  const lock = useCallback(() => {
+    localStorage.removeItem(UNLOCK_KEY);
+    setUnlocked(false);
+  }, []);
+
+  if (!configured) return <SetupNotice />;
+
+  return unlocked ? (
+    <Dashboard onLock={lock} />
+  ) : (
+    <CodeGate onUnlock={unlock} />
+  );
 }

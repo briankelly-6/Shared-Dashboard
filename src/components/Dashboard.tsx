@@ -1,7 +1,10 @@
-import { supabase } from '../lib/supabase';
 import { WIDGETS } from '../widgets/registry';
 import type { WidgetDef } from '../widgets/registry';
 import { WidgetCard } from './WidgetCard';
+
+interface DashboardProps {
+  onLock: () => void;
+}
 
 // Literal classes so Tailwind keeps them through purge. span 1 is the default
 // cell; 2/3 are reserved for future wider widgets.
@@ -11,7 +14,7 @@ const SPAN_CLASS: Record<WidgetDef['span'], string> = {
   3: 'lg:col-span-3',
 };
 
-export function Dashboard() {
+export function Dashboard({ onLock }: DashboardProps) {
   return (
     <div className="flex h-screen min-h-0 flex-col bg-neutral-100">
       <header className="flex shrink-0 items-center justify-between border-b border-neutral-300 bg-white px-4 py-2">
@@ -20,9 +23,9 @@ export function Dashboard() {
         </h1>
         <button
           type="button"
-          onClick={() => void supabase.auth.signOut()}
+          onClick={onLock}
           className="text-[11px] uppercase tracking-wider text-neutral-400 hover:text-neutral-700"
-          title="Lock this device (sign out)"
+          title="Lock this device"
         >
           Lock
         </button>

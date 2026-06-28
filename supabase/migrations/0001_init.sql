@@ -63,9 +63,10 @@ create index if not exists idx_friday_topics_order
   on public.friday_topics (sort_order, created_at);
 
 -- ---------------------------------------------------------------------------
--- Row Level Security — authenticated role gets full read/write.
--- The three team members all sign in to ONE shared auth account via the
--- verify-code Edge Function, so there is no per-user identity here.
+-- Row Level Security — the app uses a client-side 6-digit gate and talks to
+-- the database with the public anon key, so policies grant full read/write to
+-- the anon (and authenticated) roles. This is intentional, low-confidentiality
+-- access control (security by URL/key obscurity). See the README.
 -- ---------------------------------------------------------------------------
 
 alter table public.pipeline_companies enable row level security;
@@ -82,11 +83,11 @@ begin
   ]
   loop
     execute format(
-      'drop policy if exists "authenticated full access" on public.%I;', t
+      'drop policy if exists "shared full access" on public.%I;', t
     );
     execute format(
-      'create policy "authenticated full access" on public.%I
-         for all to authenticated using (true) with check (true);', t
+      'create policy "shared full access" on public.%I
+         for all to anon, authenticated using (true) with check (true);', t
     );
   end loop;
 end $$;
