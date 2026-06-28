@@ -3,7 +3,7 @@ import type { FridayTopic } from '../lib/types';
 import { Checklist } from '../components/Checklist';
 
 /**
- * Friday Core Topics — a simple shared checklist of topic lines. Checking a
+ * Friday Catch Up Topics — a simple shared checklist of topic lines. Checking a
  * topic closes it with a red strikethrough; a separate control deletes it.
  */
 export function FridayTopicsWidget() {

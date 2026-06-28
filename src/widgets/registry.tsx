@@ -31,5 +31,5 @@ export const WIDGETS: WidgetDef[] = [
   { id: 'on-deck', title: 'On Deck Circle', component: OnDeck, span: 1 },
   { id: 'quick-cut', title: 'Quick Cut Pipeline', component: QuickCut, span: 1 },
   { id: 'whacky', title: 'Whacky Ideas', component: Whacky, span: 1 },
-  { id: 'friday-core', title: 'Friday Core Topics', component: FridayTopicsWidget, span: 1 },
+  { id: 'friday-core', title: 'Friday Catch Up Topics', component: FridayTopicsWidget, span: 1 },
 ];

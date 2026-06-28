@@ -23,7 +23,7 @@ Everyone shares one board and sees the same live state across their devices.
 | 3 | **On Deck Circle** | Flat table: Company / L-S / Thesis | `idea_rows` (on_deck) |
 | 4 | **Quick Cut Pipeline** | Same as #3, separate data | `idea_rows` (quick_cut) |
 | 5 | **Whacky Ideas** | Same as #3, separate data | `idea_rows` (whacky) |
-| 6 | **Friday Core Topics** | Simple checklist | `friday_topics` |
+| 6 | **Friday Catch Up Topics** | Simple checklist | `friday_topics` |
 
 The buckets are independent — there is no promotion/funnel between them and
 every list grows freely. Checking a checklist line strikes it through in **red**

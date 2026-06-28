@@ -21,7 +21,7 @@ interface ChecklistProps {
 /**
  * Presentational checklist: checkbox + inline-editable text + delete control.
  * Checking a line strikes it through in red (toggleable). Used by both the
- * pipeline work plans and the Friday Core Topics widget.
+ * pipeline work plans and the Friday Catch Up Topics widget.
  */
 export function Checklist({
   items,
