@@ -115,6 +115,22 @@ Import the repo in Vercel (framework preset **Vite**; build `npm run build`,
 output `dist`), add the three `VITE_*` env vars in the Vercel project settings,
 and deploy. The backend (Supabase) is already hosted once steps 1–3 are done.
 
+### Backups and the keep-alive (added 2026-09-10)
+The board's content exists only in the four Supabase tables, and Supabase's
+free plan **pauses a project after seven idle days** — a paused project made the
+whole board read as blank on 2026-09-10 (nothing was lost; resuming it in the
+Supabase dashboard brought everything back). Two things now guard that:
+
+- **`.github/workflows/backup.yml`** reads the four tables once a night through
+  the public REST API and commits them as JSON under `backups/` (only when the
+  data changed). The read is also the keep-alive that stops the pause. Setup is
+  two repository secrets, `SUPABASE_URL` and `SUPABASE_ANON_KEY` (the same
+  values as Vercel's `VITE_*` pair); see `backups/README.md`, which also covers
+  restoring with `scripts/restore_backup.py`.
+- **A visible load error.** Each widget shows a red "Can't reach the database"
+  line (with the raw message) when its load fails, instead of the empty-table
+  label that used to make an outage look like deleted data.
+
 ---
 
 ## Security note
