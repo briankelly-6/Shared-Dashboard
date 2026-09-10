@@ -1,0 +1,66 @@
+[
+  {
+    "created_at": "2026-06-28T03:38:33.853+00:00",
+    "id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "name": "GEHC/SHL",
+    "pipeline": "long",
+    "sort_order": 1,
+    "status": "Diligence ongoing"
+  },
+  {
+    "created_at": "2026-06-28T03:42:13.082+00:00",
+    "id": "a41c92bf-b579-4fb8-be18-81c7ec6f526a",
+    "name": "WELL",
+    "pipeline": "short",
+    "sort_order": 1,
+    "status": "Paused (Cyclical Timing)"
+  },
+  {
+    "created_at": "2026-06-28T03:40:46.244+00:00",
+    "id": "d2824373-00f2-493e-8397-e2bcfa2db357",
+    "name": "NFLX",
+    "pipeline": "long",
+    "sort_order": 2,
+    "status": "On hold, watching stock"
+  },
+  {
+    "created_at": "2026-06-28T03:58:14.356+00:00",
+    "id": "2d011ff3-42eb-411c-8ee8-9295b2342358",
+    "name": "LPLA",
+    "pipeline": "long",
+    "sort_order": 3,
+    "status": "Light background work until mgmt. mtg. "
+  },
+  {
+    "created_at": "2026-06-28T16:03:32.19+00:00",
+    "id": "bd6f8ee0-c855-4944-9124-368f5906cb06",
+    "name": "TMO/DHR",
+    "pipeline": "long",
+    "sort_order": 4,
+    "status": "On hold, watching stocks"
+  },
+  {
+    "created_at": "2026-07-10T12:31:40.882+00:00",
+    "id": "ecf44614-f6d8-413d-afe9-f0847ed74782",
+    "name": "CLNX",
+    "pipeline": "long",
+    "sort_order": 5,
+    "status": "Too much brain damage?"
+  },
+  {
+    "created_at": "2026-06-29T04:04:39.355+00:00",
+    "id": "3ac420ec-f8af-41c8-a4a6-13df3f8aea57",
+    "name": "COF",
+    "pipeline": "long",
+    "sort_order": 6,
+    "status": "On hold - not for us?"
+  },
+  {
+    "created_at": "2026-06-28T04:00:56.972+00:00",
+    "id": "277c45fb-5d3b-4fbb-b440-5d59f68f0e70",
+    "name": "V/MA",
+    "pipeline": "long",
+    "sort_order": 7,
+    "status": "Owned"
+  }
+]

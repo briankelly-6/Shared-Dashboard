@@ -1,0 +1,170 @@
+[
+  {
+    "company_id": "2d011ff3-42eb-411c-8ee8-9295b2342358",
+    "created_at": "2026-06-28T14:23:59.053+00:00",
+    "done": false,
+    "id": "af1990b2-b4eb-4bf6-9729-99e392d04582",
+    "sort_order": 1,
+    "text": "Consultant-Led Advisor P&L Analysis"
+  },
+  {
+    "company_id": "bd6f8ee0-c855-4944-9124-368f5906cb06",
+    "created_at": "2026-06-28T20:37:23.418+00:00",
+    "done": false,
+    "id": "a6b8eac8-e3a7-435a-b3fb-3e58067152a4",
+    "sort_order": 1,
+    "text": "Speak w/ pharma AI R&D leads"
+  },
+  {
+    "company_id": "a41c92bf-b579-4fb8-be18-81c7ec6f526a",
+    "created_at": "2026-06-29T03:43:17.584+00:00",
+    "done": true,
+    "id": "66210dab-92c4-4c55-ac7b-f042cce183d4",
+    "sort_order": 1,
+    "text": "First round of developer calls"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-20T20:17:27.9+00:00",
+    "done": false,
+    "id": "8e698ca8-cd6f-4ed8-9ced-f52db5cb2160",
+    "sort_order": 3,
+    "text": "More tariff specifics?"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-10T16:34:36.249+00:00",
+    "done": false,
+    "id": "bdb7ac5a-0f6c-49d0-bc68-aeebb78efaf8",
+    "sort_order": 4,
+    "text": "Ultrasound double click"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-06-30T18:43:29.753+00:00",
+    "done": false,
+    "id": "e00f1600-5fa2-49a1-b4b5-bbca1b649c02",
+    "sort_order": 6,
+    "text": "Map out the various molecular imaging tailwinds"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-10T22:45:58.958+00:00",
+    "done": false,
+    "id": "d48441ed-c5af-4fe8-ad67-30f2157cf9a8",
+    "sort_order": 7,
+    "text": "Radiopharma trial pipeline? Radioimmunotherapy?"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-20T14:26:28.574+00:00",
+    "done": false,
+    "id": "c4c27a94-91d0-40b5-812e-b1135e9a4168",
+    "sort_order": 8,
+    "text": "Contribution of Omnipaq vs. Flyrcado at Scale?"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-10T16:39:09.628+00:00",
+    "done": false,
+    "id": "fc69ea87-734e-4afe-9f39-41a43cf51d2b",
+    "sort_order": 12,
+    "text": "Omnipaq and any generic case studies"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-20T14:26:12.222+00:00",
+    "done": false,
+    "id": "a19fbd84-db90-4158-8113-c55e579a6ed9",
+    "sort_order": 14,
+    "text": "Varian installed & refresh working"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-06-28T12:26:44.02+00:00",
+    "done": false,
+    "id": "68eccb00-3e0b-458c-ad6e-c512bfb4cef4",
+    "sort_order": 16,
+    "text": "GEHC CEO 1x1 mtg"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-08T12:30:15.542+00:00",
+    "done": true,
+    "id": "7ca1574b-9791-40ed-a8fe-0fde6598a013",
+    "sort_order": 16,
+    "text": "Follow-up expert calls on PET/nuclear outlook"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-08T12:29:58.201+00:00",
+    "done": true,
+    "id": "609ed19d-a34c-4702-9123-43ce7b9ec465",
+    "sort_order": 19,
+    "text": "Follow-up expert calls on Varian"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-04T16:28:27.195+00:00",
+    "done": true,
+    "id": "5643ec92-ab81-44c6-8b3c-17dd0fe67aa7",
+    "sort_order": 20,
+    "text": "Medtech apocalypse context & hospitals/utilization"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-06-28T03:44:11.092+00:00",
+    "done": true,
+    "id": "5cec4743-b03d-4764-99e5-467c5460018a",
+    "sort_order": 21,
+    "text": "United Imaging tracking & conclusions"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-06-28T20:44:49.572+00:00",
+    "done": true,
+    "id": "9c7fa19b-e149-400a-9195-1d0440b6e17f",
+    "sort_order": 22,
+    "text": "Flyrcado market sizing and ramp"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-15T02:27:50.989+00:00",
+    "done": true,
+    "id": "52f85a51-b058-4558-9798-da473d3e45fb",
+    "sort_order": 23,
+    "text": "AO WIP: Best guess revenue by modality w/ in big iron"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-20T14:27:51.179+00:00",
+    "done": true,
+    "id": "c81bd868-e6e9-46ca-a7e8-89c915357ec9",
+    "sort_order": 24,
+    "text": "BK WIP: Intro slides & write-up"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-08T12:30:34.196+00:00",
+    "done": true,
+    "id": "bb516c7e-a7d2-4fde-b946-697935de07f5",
+    "sort_order": 25,
+    "text": "BK Wip: Map out the shitty businesses for each"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-10T14:39:32.476+00:00",
+    "done": true,
+    "id": "13fc10e2-999e-413d-9a5d-da7b71d8a9ea",
+    "sort_order": 26,
+    "text": "Conform imaging vs. heavy metal nomenclature for memo"
+  },
+  {
+    "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
+    "created_at": "2026-07-16T11:18:29.967+00:00",
+    "done": true,
+    "id": "18cbad86-0084-4966-9189-519af1b70761",
+    "sort_order": 27,
+    "text": "AO WIP: Medtech - spread some proxies for vols? MLR, HCA vols, other vols?"
+  }
+]

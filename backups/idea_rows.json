@@ -1,0 +1,137 @@
+[
+  {
+    "company": "DY",
+    "created_at": "2026-07-05T20:26:33.513+00:00",
+    "id": "ff239e3e-8bdc-486f-b276-a1f65a0b5810",
+    "list": "quick_cut",
+    "side": "S",
+    "sort_order": 1,
+    "thesis": "First derivative on resi FTTH - peak cycle w/ Starlink headwinds? Peak margins and peak multiple. Minimal AI tailwinds."
+  },
+  {
+    "company": "AFRM",
+    "created_at": "2026-07-24T12:35:56.429+00:00",
+    "id": "c1aa0190-bea7-4257-9e06-f1cd539bfcf8",
+    "list": "on_deck",
+    "side": "L",
+    "sort_order": 1,
+    "thesis": "BNPL real category. AFRM is the winner. Long runway. High incremental margins. Priced like commoditized fintech."
+  },
+  {
+    "company": "AXP",
+    "created_at": "2026-06-28T03:42:20.242+00:00",
+    "id": "057a800d-ef59-4987-bc5e-d15c843df197",
+    "list": "on_deck",
+    "side": "L",
+    "sort_order": 2,
+    "thesis": "Underappreciated quality + growth durability. Pulling away due to reinvesting benefits of scale into customer rewards."
+  },
+  {
+    "company": "COIN",
+    "created_at": "2026-06-28T03:51:43.933+00:00",
+    "id": "60c1ff63-9719-4750-aca7-7aec9335c222",
+    "list": "whacky",
+    "side": "L",
+    "sort_order": 2,
+    "thesis": "Crypto optionality."
+  },
+  {
+    "company": "CPAY",
+    "created_at": "2026-08-28T16:36:43.451+00:00",
+    "id": "c6d1d626-d833-48ba-8142-24741460993c",
+    "list": "quick_cut",
+    "side": "S",
+    "sort_order": 2,
+    "thesis": "Stablecoin risks + poor checks wrt sustainability of growth practices."
+  },
+  {
+    "company": "JKHY",
+    "created_at": "2026-06-28T15:17:10.41+00:00",
+    "id": "295aa1fa-61ef-4f96-a20b-0f68de960637",
+    "list": "quick_cut",
+    "side": "S",
+    "sort_order": 3,
+    "thesis": "Expensive w/ minimal EPS upside - risk from adjacent services compression due to AI."
+  },
+  {
+    "company": "AXON",
+    "created_at": "2026-06-28T16:02:56.567+00:00",
+    "id": "f12cbb7f-269a-4239-8ffb-147a222c5c39",
+    "list": "whacky",
+    "side": "L",
+    "sort_order": 3,
+    "thesis": "Long growth runway, sticky mission-critical services, innovative management team, AI winner."
+  },
+  {
+    "company": "MDLN",
+    "created_at": "2026-06-28T20:38:37.108+00:00",
+    "id": "f06b66bc-4f4e-4f88-a422-e4b331b404e0",
+    "list": "on_deck",
+    "side": "L",
+    "sort_order": 3,
+    "thesis": "Differentiated distributor trading poorly due to temporary headwinds. Embedded upside from private-label shift."
+  },
+  {
+    "company": "IQV",
+    "created_at": "2026-06-28T20:37:56.291+00:00",
+    "id": "90510ca2-b894-4f6f-b18a-53c6c24d0e9c",
+    "list": "on_deck",
+    "side": "L",
+    "sort_order": 4,
+    "thesis": "Not AI loser - could be tip of spear AI winner."
+  },
+  {
+    "company": "GLBE",
+    "created_at": "2026-06-28T20:38:20.306+00:00",
+    "id": "87f0c7e2-38b1-4744-abfc-7c1b222ad935",
+    "list": "whacky",
+    "side": "L",
+    "sort_order": 4,
+    "thesis": "Underappreciated business with strong pricing power, not AI loser, temporary headwinds from tariffs could turn into tailwinds."
+  },
+  {
+    "company": "TKO",
+    "created_at": "2026-07-24T13:15:23.906+00:00",
+    "id": "3feb7439-19b8-415c-baae-738f5fffffbd",
+    "list": "quick_cut",
+    "side": "S",
+    "sort_order": 4,
+    "thesis": "Priced for perfection, upside goodness largely played out, 2nd tier could get squeezed, likely destructive capital allocation over time."
+  },
+  {
+    "company": "FUN",
+    "created_at": "2026-06-29T12:28:24.044+00:00",
+    "id": "cbefb8aa-f113-4716-8f9e-0fd2d344dbd2",
+    "list": "whacky",
+    "side": "L",
+    "sort_order": 5,
+    "thesis": "* Need to believe regional park biz not broken."
+  },
+  {
+    "company": "DIS",
+    "created_at": "2026-06-29T12:28:49.519+00:00",
+    "id": "e72630f7-3af1-43d6-bf1e-c82f9f630028",
+    "list": "on_deck",
+    "side": "L",
+    "sort_order": 5,
+    "thesis": "AI-defensive (parks, sports via ESPN, animation benefit on studio/consumables)."
+  },
+  {
+    "company": "RGEN",
+    "created_at": "2026-07-13T14:46:53.121+00:00",
+    "id": "e22e1956-5747-41f4-b35d-72e8e917bcfe",
+    "list": "quick_cut",
+    "side": "L",
+    "sort_order": 5,
+    "thesis": "Take out candidate. Is core biz ownable for us?"
+  },
+  {
+    "company": "RBLX",
+    "created_at": "2026-06-29T15:47:14.805+00:00",
+    "id": "3221ddc5-f44d-42eb-8eb5-ceca36dad11f",
+    "list": "whacky",
+    "side": "L",
+    "sort_order": 6,
+    "thesis": "Undermonetized AI winner rather than loser."
+  }
+]
