@@ -18,6 +18,17 @@ project after seven days without a request, and a paused project makes the
 board look blank (that happened on 2026-09-10; resuming the project in the
 Supabase dashboard brought everything back). One request a day keeps it awake.
 
+**The export is guarded.** If a table that had rows in the last backup comes
+back empty, or lost more than half its rows, the job fails and writes nothing,
+so the previous backup is never overwritten by a bad read (a paused project,
+a rejected key or a dropped access policy all read as an empty table). GitHub
+emails the repo owner when the job fails. If the rows were removed on purpose,
+run the workflow by hand with **allow_shrink** ticked. The export also pages
+through large tables, so nothing is silently cut at the API's 1,000-row limit.
+
+Backup-only commits do not redeploy the site: `vercel.json` tells Vercel to
+skip a build when only `backups/`, `scripts/` or `.github/` changed.
+
 ## If the board is ever blank again
 
 1. Open the Supabase dashboard. If the project says **Paused**, click **Restore**,
@@ -37,7 +48,10 @@ SUPABASE_URL=https://<ref>.supabase.co SUPABASE_ANON_KEY=<key> \
 ```
 
 It upserts every row by id (parent tables first), so it is safe on a table that
-still has some rows. `--dry-run` only counts the files; `--only friday_topics`
+still has some rows: rows present in the backup are re-created or overwritten
+with the backup's version, and rows added since the backup are left alone. A row
+the team deleted after the backup was taken comes back too, so re-delete those
+on the board afterwards. `--dry-run` only counts the files; `--only friday_topics`
 restores one table. Then reload the board.
 
 ## Setup (once)
