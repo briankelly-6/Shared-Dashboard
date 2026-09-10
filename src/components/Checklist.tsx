@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { InlineText } from './InlineText';
+import { LoadError } from './LoadError';
 import { ReorderButtons } from './ReorderButtons';
 
 export interface ChecklistItemData {
@@ -11,6 +12,10 @@ export interface ChecklistItemData {
 interface ChecklistProps {
   items: ChecklistItemData[];
   loading?: boolean;
+  /** The table hook's load error. When set, the "empty" label is suppressed
+   *  and the shared LoadError line renders instead — an unreachable database
+   *  must never read as "No items yet." */
+  error?: string | null;
   onAdd: (text: string) => void;
   onToggle: (id: string, done: boolean) => void;
   onEdit: (id: string, text: string) => void;
@@ -28,6 +33,7 @@ interface ChecklistProps {
 export function Checklist({
   items,
   loading = false,
+  error = null,
   onAdd,
   onToggle,
   onEdit,
@@ -47,8 +53,12 @@ export function Checklist({
 
   return (
     <div className="flex h-full min-h-0 flex-col">
+      <LoadError message={error} />
       <ul className="min-h-0 flex-1 overflow-auto">
-        {!loading && items.length === 0 && (
+        {loading && (
+          <li className="px-3 py-2 text-xs italic text-neutral-400">Loading…</li>
+        )}
+        {!loading && !error && items.length === 0 && (
           <li className="px-3 py-2 text-xs italic text-neutral-400">
             {emptyLabel}
           </li>

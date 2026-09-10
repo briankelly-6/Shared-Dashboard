@@ -13,6 +13,7 @@ export function FridayTopicsWidget() {
     <Checklist
       items={topics.rows}
       loading={topics.loading}
+      error={topics.error}
       addPlaceholder="Add topic…"
       emptyLabel="No topics yet."
       onAdd={(text) => void topics.insert({ text, done: false })}

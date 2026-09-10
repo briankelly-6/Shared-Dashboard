@@ -3,6 +3,7 @@ import { useRealtimeTable } from '../hooks/useRealtimeTable';
 import type { Pipeline, PipelineCompany, WorkPlanItem } from '../lib/types';
 import { Checklist } from '../components/Checklist';
 import { InlineText } from '../components/InlineText';
+import { LoadError } from '../components/LoadError';
 import { ReorderButtons } from '../components/ReorderButtons';
 
 interface PipelineWidgetProps {
@@ -74,8 +75,12 @@ export function PipelineWidget({ pipeline }: PipelineWidgetProps) {
           <span className="min-w-0 flex-1 px-3 py-1.5">Company</span>
           <span className="w-[64.7%] shrink-0 px-2 py-1.5">Status</span>
         </div>
+        <LoadError message={companies.error} />
         <ul className="min-h-0 flex-1 overflow-auto">
-          {!companies.loading && companies.rows.length === 0 && (
+          {companies.loading && (
+            <li className="px-2 py-2 text-xs italic text-neutral-400">Loading…</li>
+          )}
+          {!companies.loading && !companies.error && companies.rows.length === 0 && (
             <li className="px-2 py-2 text-xs italic text-neutral-400">
               No companies yet.
             </li>
@@ -248,6 +253,7 @@ function WorkPlan({ companyId }: WorkPlanProps) {
         <Checklist
           items={items.rows}
           loading={items.loading}
+          error={items.error}
           addPlaceholder="Add to-do…"
           emptyLabel="No to-dos yet."
           onAdd={(text) => void items.insert({ text, done: false })}

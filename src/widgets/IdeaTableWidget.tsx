@@ -1,6 +1,7 @@
 import { useRealtimeTable } from '../hooks/useRealtimeTable';
 import type { IdeaList, IdeaRow, Side } from '../lib/types';
 import { InlineText } from '../components/InlineText';
+import { LoadError } from '../components/LoadError';
 import { ReorderButtons } from '../components/ReorderButtons';
 
 interface IdeaTableWidgetProps {
@@ -23,6 +24,7 @@ export function IdeaTableWidget({ list }: IdeaTableWidgetProps) {
 
   return (
     <div className="flex h-full min-h-0 flex-col">
+      <LoadError message={rows.error} />
       <div className="min-h-0 flex-1 overflow-auto">
         <table className="w-full table-fixed border-collapse text-[13px]">
           <thead className="sticky top-0 bg-white">
@@ -34,7 +36,14 @@ export function IdeaTableWidget({ list }: IdeaTableWidgetProps) {
             </tr>
           </thead>
           <tbody>
-            {!rows.loading && rows.rows.length === 0 && (
+            {rows.loading && (
+              <tr>
+                <td colSpan={4} className="px-2 py-2 text-xs italic text-neutral-400">
+                  Loading…
+                </td>
+              </tr>
+            )}
+            {!rows.loading && !rows.error && rows.rows.length === 0 && (
               <tr>
                 <td
                   colSpan={4}

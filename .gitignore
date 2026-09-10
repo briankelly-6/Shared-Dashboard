@@ -32,3 +32,6 @@ dist-ssr
 # Supabase local CLI artifacts
 supabase/.branches
 supabase/.temp
+
+# Python bytecode from the backup/restore helper
+__pycache__/

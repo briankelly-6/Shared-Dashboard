@@ -1,0 +1,99 @@
+# Nightly backup + keep-alive for the BK/AO Dashboard's Supabase data.
+#
+# WHY: the board's content lives only in four Supabase tables, hand-entered, with
+# no copy anywhere else — and Supabase's free plan PAUSES a project after seven
+# days without a request, which made the whole board read as blank on
+# 2026-09-10 (nothing was lost; the project just had to be resumed). This job:
+#   1. reads the four tables once a day through the public REST API — the read
+#      itself counts as activity, so the project never idles into a pause;
+#   2. saves each table as JSON under backups/ and commits ONLY when the data
+#      changed, so an unchanged night produces no commit and no Vercel deploy.
+#
+# SETUP (once, by the repo owner): Settings → Secrets and variables → Actions →
+# New repository secret, twice:
+#   SUPABASE_URL       = the same value as Vercel's VITE_SUPABASE_URL
+#   SUPABASE_ANON_KEY  = the same value as Vercel's VITE_SUPABASE_ANON_KEY
+# These are the public (browser-embedded) values, stored as secrets only to keep
+# them out of the committed file. Then run the workflow once by hand (Actions →
+# this workflow → Run workflow) to create the first backup.
+#
+# RESTORE: see backups/README.md (scripts/restore_backup.py).
+name: Nightly backup + keep-alive
+
+on:
+  schedule:
+    - cron: '17 6 * * *' # daily, 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: supabase-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Export the four tables
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL}" ] || [ -z "${SUPABASE_ANON_KEY}" ]; then
+            echo "::error::Repository secrets SUPABASE_URL and SUPABASE_ANON_KEY are not set (see the header of this workflow)."
+            exit 1
+          fi
+          mkdir -p backups
+          for t in pipeline_companies work_plan_items idea_rows friday_topics; do
+            curl -fsS --retry 3 --retry-delay 5 \
+              "${SUPABASE_URL%/}/rest/v1/${t}?select=*&order=sort_order.asc,created_at.asc" \
+              -H "apikey: ${SUPABASE_ANON_KEY}" \
+              -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
+              -H "Range-Unit: items" -H "Range: 0-9999" \
+              -o "backups/${t}.raw.json"
+            python3 - "$t" <<'PY'
+          import json, sys
+          t = sys.argv[1]
+          rows = json.load(open(f"backups/{t}.raw.json"))
+          if not isinstance(rows, list):
+              raise SystemExit(f"::error::{t}: unexpected response (not a list): {str(rows)[:200]}")
+          if len(rows) >= 10000:
+              raise SystemExit(f"::error::{t}: {len(rows)} rows hit the export window; page the export before trusting it")
+          with open(f"backups/{t}.json", "w", encoding="utf-8") as f:
+              json.dump(rows, f, indent=2, ensure_ascii=False, sort_keys=True)
+              f.write("\n")
+          print(f"{t}: {len(rows)} rows")
+          PY
+            rm -f "backups/${t}.raw.json"
+          done
+          python3 - <<'PY'
+          import json, datetime
+          tables = ["pipeline_companies", "work_plan_items", "idea_rows", "friday_topics"]
+          counts = {t: len(json.load(open(f"backups/{t}.json"))) for t in tables}
+          manifest = {"exported_at_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                      "row_counts": counts,
+                      "note": "Nightly export of the BK/AO Dashboard's Supabase tables; also the keep-alive that stops the free-plan pause. Restore with scripts/restore_backup.py."}
+          # The timestamp lives in its own file so the data files only change when the data does.
+          with open("backups/MANIFEST.json", "w", encoding="utf-8") as f:
+              json.dump(manifest, f, indent=2); f.write("\n")
+          print(json.dumps(counts))
+          PY
+
+      - name: Commit if the data changed
+        run: |
+          set -euo pipefail
+          git config user.name "dashboard-backup"
+          git config user.email "dashboard-backup@users.noreply.github.com"
+          git add backups/pipeline_companies.json backups/work_plan_items.json backups/idea_rows.json backups/friday_topics.json
+          if git diff --cached --quiet; then
+            echo "Data unchanged since the last backup — nothing to commit (the read still counted as keep-alive activity)."
+            exit 0
+          fi
+          git add backups/MANIFEST.json
+          git commit -m "backup: nightly export $(date -u +%Y-%m-%d) — $(python3 -c 'import json;print(", ".join(f"{k} {v}" for k,v in json.load(open("backups/MANIFEST.json"))["row_counts"].items()))')"
+          git push

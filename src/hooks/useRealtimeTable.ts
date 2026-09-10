@@ -90,23 +90,34 @@ export function useRealtimeTable<T extends BaseRow>(
     setLoading(true);
 
     (async () => {
-      let query = supabase
-        .from(table)
-        .select('*')
-        .order('sort_order', { ascending: true })
-        .order('created_at', { ascending: true });
-      if (filterColumn && filterValue !== undefined) {
-        query = query.eq(filterColumn, filterValue);
+      try {
+        let query = supabase
+          .from(table)
+          .select('*')
+          .order('sort_order', { ascending: true })
+          .order('created_at', { ascending: true });
+        if (filterColumn && filterValue !== undefined) {
+          query = query.eq(filterColumn, filterValue);
+        }
+        const { data, error: qError } = await query;
+        if (!active) return;
+        if (qError) {
+          setError(qError.message);
+        } else {
+          setError(null);
+          setRows((data as T[]) ?? []);
+        }
+      } catch (e) {
+        // A fetch that THROWS (network/DNS/TLS failure, or a paused project
+        // answering with something that is not a PostgREST error envelope)
+        // must land in `error` too. Before this, it escaped the promise,
+        // `loading` stayed true forever and the widget rendered nothing at
+        // all — indistinguishable from an empty board (2026-09-10).
+        if (!active) return;
+        setError(e instanceof Error ? e.message : String(e));
+      } finally {
+        if (active) setLoading(false);
       }
-      const { data, error: qError } = await query;
-      if (!active) return;
-      if (qError) {
-        setError(qError.message);
-      } else {
-        setError(null);
-        setRows((data as T[]) ?? []);
-      }
-      setLoading(false);
     })();
 
     const channelName =
