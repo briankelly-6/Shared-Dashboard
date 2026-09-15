@@ -1,10 +1,17 @@
 {
-  "exported_at_utc": "2026-09-10T03:44:07Z",
+  "exported_at_utc": "2026-09-15T11:44:56Z",
   "row_counts": {
+    "pipeline_companies": 8,
+    "work_plan_items": 21,
+    "idea_rows": 16,
+    "friday_topics": 0
+  },
+  "previous_row_counts": {
     "pipeline_companies": 8,
     "work_plan_items": 21,
     "idea_rows": 15,
     "friday_topics": 0
   },
-  "note": "Nightly export of the BK/AO Dashboard's Supabase tables; also the keep-alive that stops the free-plan pause. Restore with scripts/restore_backup.py."
+  "allow_shrink": false,
+  "note": "Nightly export of the BK/AO Dashboard's Supabase tables; also the keep-alive that stops the free-plan pause. Paged; guarded against an empty or shrinking read. Restore with scripts/restore_backup.py."
 }
