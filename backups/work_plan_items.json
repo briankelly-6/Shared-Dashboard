@@ -24,12 +24,36 @@
     "text": "First round of developer calls"
   },
   {
+    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "created_at": "2026-10-05T15:40:24.326+00:00",
+    "done": false,
+    "id": "8dc59e66-ba3c-4f37-b103-6b1715368ee6",
+    "sort_order": 1,
+    "text": "Follow-up list for SK"
+  },
+  {
+    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "created_at": "2026-10-05T15:40:34.839+00:00",
+    "done": false,
+    "id": "2cbb649e-44e0-4476-bf9d-c24b0eae6403",
+    "sort_order": 2,
+    "text": "Earnings blurb skill"
+  },
+  {
     "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
     "created_at": "2026-07-20T20:17:27.9+00:00",
     "done": false,
     "id": "8e698ca8-cd6f-4ed8-9ced-f52db5cb2160",
     "sort_order": 3,
     "text": "More tariff specifics?"
+  },
+  {
+    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "created_at": "2026-10-05T15:40:44.822+00:00",
+    "done": false,
+    "id": "0ebfe892-8bab-4519-a6de-d6993ae6931e",
+    "sort_order": 3,
+    "text": "Excel charting skill"
   },
   {
     "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
@@ -40,12 +64,36 @@
     "text": "Ultrasound double click"
   },
   {
+    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "created_at": "2026-10-05T15:40:53.438+00:00",
+    "done": false,
+    "id": "ec3b8ab2-5218-4377-9030-e35b1356d24f",
+    "sort_order": 4,
+    "text": "Sentiment tracker skill"
+  },
+  {
+    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "created_at": "2026-10-05T15:40:56.714+00:00",
+    "done": false,
+    "id": "189a9b03-9cb3-45be-82b1-0c6f68747f08",
+    "sort_order": 5,
+    "text": "Spec sales skill"
+  },
+  {
     "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
     "created_at": "2026-06-30T18:43:29.753+00:00",
     "done": false,
     "id": "e00f1600-5fa2-49a1-b4b5-bbca1b649c02",
     "sort_order": 6,
     "text": "Map out the various molecular imaging tailwinds"
+  },
+  {
+    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "created_at": "2026-10-05T15:41:01.984+00:00",
+    "done": false,
+    "id": "62a046b8-6227-4062-9730-8721bec75ad1",
+    "sort_order": 6,
+    "text": "Global retail sales tracker"
   },
   {
     "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",

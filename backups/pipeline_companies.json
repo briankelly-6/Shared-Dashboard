@@ -8,11 +8,19 @@
     "status": "Paused (Cyclical Timing)"
   },
   {
+    "created_at": "2026-10-05T15:39:56.755+00:00",
+    "id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "name": "AI Workstreams",
+    "pipeline": "long",
+    "sort_order": 1,
+    "status": ""
+  },
+  {
     "created_at": "2026-09-21T01:55:16.624+00:00",
     "id": "391a664b-e0c1-415f-9124-fd21e5eac9e2",
     "name": "AFRM",
     "pipeline": "long",
-    "sort_order": 1,
+    "sort_order": 2,
     "status": "Diligence ongoing"
   },
   {
@@ -20,7 +28,7 @@
     "id": "e8d095ed-b229-442a-894e-645283d7656e",
     "name": "AXP",
     "pipeline": "long",
-    "sort_order": 2,
+    "sort_order": 3,
     "status": "Diligence ongoing"
   },
   {
@@ -28,7 +36,7 @@
     "id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
     "name": "GEHC/SHL",
     "pipeline": "long",
-    "sort_order": 3,
+    "sort_order": 4,
     "status": "Diligence ongoing"
   },
   {
@@ -36,7 +44,7 @@
     "id": "d2824373-00f2-493e-8397-e2bcfa2db357",
     "name": "NFLX",
     "pipeline": "long",
-    "sort_order": 4,
+    "sort_order": 5,
     "status": "On hold, watching stock"
   },
   {
@@ -44,7 +52,7 @@
     "id": "2d011ff3-42eb-411c-8ee8-9295b2342358",
     "name": "LPLA",
     "pipeline": "long",
-    "sort_order": 5,
+    "sort_order": 6,
     "status": "Light background work until mgmt. mtg. "
   },
   {
@@ -52,7 +60,7 @@
     "id": "bd6f8ee0-c855-4944-9124-368f5906cb06",
     "name": "TMO/DHR",
     "pipeline": "long",
-    "sort_order": 6,
+    "sort_order": 7,
     "status": "On hold, watching stocks"
   },
   {
@@ -60,7 +68,7 @@
     "id": "ecf44614-f6d8-413d-afe9-f0847ed74782",
     "name": "CLNX",
     "pipeline": "long",
-    "sort_order": 7,
+    "sort_order": 8,
     "status": "Too much brain damage?"
   },
   {
@@ -68,7 +76,7 @@
     "id": "3ac420ec-f8af-41c8-a4a6-13df3f8aea57",
     "name": "COF",
     "pipeline": "long",
-    "sort_order": 8,
+    "sort_order": 9,
     "status": "On hold - not for us?"
   },
   {
@@ -76,7 +84,7 @@
     "id": "277c45fb-5d3b-4fbb-b440-5d59f68f0e70",
     "name": "V/MA",
     "pipeline": "long",
-    "sort_order": 9,
+    "sort_order": 10,
     "status": "Owned"
   }
 ]
