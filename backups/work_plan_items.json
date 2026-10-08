@@ -112,6 +112,22 @@
     "text": "Implement the repo sweep for focus names"
   },
   {
+    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "created_at": "2026-10-07T16:27:00.741+00:00",
+    "done": false,
+    "id": "216d341f-f049-4d80-91ed-da24c77563a9",
+    "sort_order": 9,
+    "text": "company-document skill based on wiki in addition to w/e we put in"
+  },
+  {
+    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "created_at": "2026-10-08T03:33:03.625+00:00",
+    "done": false,
+    "id": "26d67d7d-8a0c-49bf-bc9f-436625b0c457",
+    "sort_order": 10,
+    "text": "Sensortower skill"
+  },
+  {
     "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
     "created_at": "2026-07-10T16:39:09.628+00:00",
     "done": false,
