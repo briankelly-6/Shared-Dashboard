@@ -144,12 +144,36 @@
     "text": "Omnipaq and any generic case studies"
   },
   {
+    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "created_at": "2026-10-11T19:06:23.489+00:00",
+    "done": false,
+    "id": "6ae6d54e-8779-4f52-9a04-eab71e263586",
+    "sort_order": 12,
+    "text": "PPT slides"
+  },
+  {
+    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "created_at": "2026-10-11T19:06:26.937+00:00",
+    "done": false,
+    "id": "79bef6aa-c145-4ec5-8ceb-f6f1552a1e37",
+    "sort_order": 13,
+    "text": "\"week ahead\""
+  },
+  {
     "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
     "created_at": "2026-07-20T14:26:12.222+00:00",
     "done": false,
     "id": "a19fbd84-db90-4158-8113-c55e579a6ed9",
     "sort_order": 14,
     "text": "Varian installed & refresh working"
+  },
+  {
+    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
+    "created_at": "2026-10-12T14:23:23.586+00:00",
+    "done": false,
+    "id": "3b70c56d-cf48-4e73-9633-d655d0f8cca6",
+    "sort_order": 14,
+    "text": "earnings prep"
   },
   {
     "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",

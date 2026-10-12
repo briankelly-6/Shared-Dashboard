@@ -133,5 +133,14 @@
     "side": "L",
     "sort_order": 7,
     "thesis": "Everyone loves...should take a peek."
+  },
+  {
+    "company": "JPM",
+    "created_at": "2026-10-12T14:31:46.962+00:00",
+    "id": "0e8bcecd-8e19-4577-a977-1ea32d532b97",
+    "list": "whacky",
+    "side": "L",
+    "sort_order": 7,
+    "thesis": "It's JPM - and may get caught up in AI angst. We should know it."
   }
 ]
