@@ -1,14 +1,14 @@
 {
-  "exported_at_utc": "2026-10-15T11:29:44Z",
+  "exported_at_utc": "2026-10-17T10:44:53Z",
   "row_counts": {
     "pipeline_companies": 12,
-    "work_plan_items": 36,
+    "work_plan_items": 33,
     "idea_rows": 16,
     "friday_topics": 0
   },
   "previous_row_counts": {
     "pipeline_companies": 12,
-    "work_plan_items": 35,
+    "work_plan_items": 36,
     "idea_rows": 16,
     "friday_topics": 0
   },

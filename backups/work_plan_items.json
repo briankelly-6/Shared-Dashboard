@@ -25,11 +25,11 @@
   },
   {
     "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
-    "created_at": "2026-10-05T15:40:34.839+00:00",
+    "created_at": "2026-10-05T15:40:56.714+00:00",
     "done": false,
-    "id": "2cbb649e-44e0-4476-bf9d-c24b0eae6403",
+    "id": "189a9b03-9cb3-45be-82b1-0c6f68747f08",
     "sort_order": 2,
-    "text": "Earnings blurb skill"
+    "text": "Spec sales skill"
   },
   {
     "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
@@ -49,19 +49,19 @@
   },
   {
     "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
-    "created_at": "2026-10-05T15:40:53.438+00:00",
+    "created_at": "2026-10-05T15:40:34.839+00:00",
     "done": false,
-    "id": "ec3b8ab2-5218-4377-9030-e35b1356d24f",
+    "id": "2cbb649e-44e0-4476-bf9d-c24b0eae6403",
     "sort_order": 4,
-    "text": "Sentiment tracker skill"
+    "text": "Earnings blurb skill"
   },
   {
     "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
-    "created_at": "2026-10-05T15:40:56.714+00:00",
+    "created_at": "2026-10-05T15:40:53.438+00:00",
     "done": false,
-    "id": "189a9b03-9cb3-45be-82b1-0c6f68747f08",
+    "id": "ec3b8ab2-5218-4377-9030-e35b1356d24f",
     "sort_order": 5,
-    "text": "Spec sales skill"
+    "text": "Sentiment tracker skill"
   },
   {
     "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
@@ -110,14 +110,6 @@
     "id": "47a4a3d5-63dd-47f9-b09d-e300481ff2f7",
     "sort_order": 8,
     "text": "re-create old travel tracker + est?"
-  },
-  {
-    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
-    "created_at": "2026-10-08T03:33:03.625+00:00",
-    "done": false,
-    "id": "26d67d7d-8a0c-49bf-bc9f-436625b0c457",
-    "sort_order": 9,
-    "text": "Sensortower skill"
   },
   {
     "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
@@ -177,11 +169,11 @@
   },
   {
     "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
-    "created_at": "2026-10-15T03:30:11.746+00:00",
+    "created_at": "2026-10-16T20:59:32.148+00:00",
     "done": false,
-    "id": "505fc7fb-f233-458b-885e-dd40c2161b9d",
+    "id": "17e67d60-b7d1-4efb-a661-81248e9897f0",
     "sort_order": 15,
-    "text": "this week in AI"
+    "text": "overall weekly digest"
   },
   {
     "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
@@ -198,22 +190,6 @@
     "id": "7ca1574b-9791-40ed-a8fe-0fde6598a013",
     "sort_order": 16,
     "text": "Follow-up expert calls on PET/nuclear outlook"
-  },
-  {
-    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
-    "created_at": "2026-10-06T14:26:41.361+00:00",
-    "done": true,
-    "id": "76a25ada-976c-4367-9e0d-8a261a16519d",
-    "sort_order": 16,
-    "text": "Implement the repo sweep for focus names"
-  },
-  {
-    "company_id": "26e7c9d7-3687-47e7-893a-140597157613",
-    "created_at": "2026-10-07T16:27:00.741+00:00",
-    "done": true,
-    "id": "216d341f-f049-4d80-91ed-da24c77563a9",
-    "sort_order": 17,
-    "text": "company-document skill based on wiki in addition to w/e we put in"
   },
   {
     "company_id": "64e98d13-5488-4398-be2f-e6dbc9636dd7",
